@@ -1,9 +1,7 @@
 <h1>Temat projektu</h1>
 Celem projektu jest zaimplementowanie systemu realizującego wybrane podstawowe operacje w przykładowej bazie Northwind w wybranej technologii.
 
-np.
-
-Operacje CRUD na wybranych tabelach
+<p>Operacje CRUD na wybranych tabelach
 Operacje składania zamówień na produkty 
 Operacje wyszukiwania informacji i raportowania (realizacja złożonych operacji SQL)
 itp.
@@ -37,7 +35,7 @@ Postgres
 MySql
 MongoDB
 Inne do uzgodnienia
+</p>
 
-
-Kanban Dashboard:
+<h1>Dashboard</h1>
 https://bazydanych.kanbantool.com/dashboard
