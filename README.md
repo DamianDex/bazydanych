@@ -38,3 +38,10 @@ Inne do uzgodnienia
 
 <h1>Dashboard</h1>
 https://bazydanych.kanbantool.com/dashboard
+
+<h1>Wybrane technologie</h1>
+Java  
+Hibernate  
+PostgreSQL  
+Jenkins  
+Swing
