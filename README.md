@@ -1,10 +1,10 @@
 <h1>Temat projektu</h1>
-Celem projektu jest zaimplementowanie systemu realizującego wybrane podstawowe operacje w przykładowej bazie Northwind w wybranej technologii.
-
-<p>Operacje CRUD na wybranych tabelach
-Operacje składania zamówień na produkty 
-Operacje wyszukiwania informacji i raportowania (realizacja złożonych operacji SQL)
-itp.
+Celem projektu jest zaimplementowanie systemu realizującego wybrane podstawowe operacje w przykładowej bazie Northwind w wybranej technologii.  
+  
+Operacje CRUD na wybranych tabelach  
+Operacje składania zamówień na produkty  
+Operacje wyszukiwania informacji i raportowania (realizacja złożonych operacji SQL)  
+  
 Należy zwrócić uwagę na sposób i wydajność realizacji operacji bazodanowych (np. przedstawić wyniki pomiarów wydajnościowych)
 
 Ważnym elementem projektu jest prezentacja technologii w której realizowany jest projekt, dokumentacja powinna mieć formę przewodnika (tutorialu) po danej technologii (przewodnik ilustrujący jak należy programować elementy systemu bazodanowego - na przykładzie bazy Northwind), przewodnik powinien zawierać opis wraz z elementami kodu
@@ -35,7 +35,6 @@ Postgres
 MySql
 MongoDB
 Inne do uzgodnienia
-</p>
 
 <h1>Dashboard</h1>
 https://bazydanych.kanbantool.com/dashboard
