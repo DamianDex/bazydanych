@@ -1,5 +1,7 @@
 package entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +11,11 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "CATEGORIES")
 public class Categories implements Serializable {
 
     @Id
-    @Column(name = "categoryId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "categoriesGenerator", strategy = "increment")
+    @GeneratedValue(generator = "categoriesGenerator")
     private int categoryId;
 
     private String categoryName;
