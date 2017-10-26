@@ -61,4 +61,9 @@ public class Categories implements Serializable {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+    public String[] toArray() {
+        String [] fields = {String.valueOf(categoryId), categoryName, description};
+        return fields;
+    }
 }
