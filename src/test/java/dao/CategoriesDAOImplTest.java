@@ -1,15 +1,10 @@
 package dao;
 
 import entities.Categories;
-import org.hibernate.Session;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.*;
 
 public class CategoriesDAOImplTest {
 
@@ -70,26 +65,25 @@ public class CategoriesDAOImplTest {
         objectUnderTest.updateCategory(category);
     }
 
+    @Ignore
     @Test
     public void listCategories() throws Exception {
-        objectUnderTest.listCategories();
+
     }
 
     @Test
     public void getCategoryById() throws Exception {
-        String expectedCategoryName = "Seafood";
-        String expectedCategoryDescription = "Seaweed and fish";
-
-        Categories category = objectUnderTest.getCategoryById(8);
-
-        Assert.assertEquals(expectedCategoryName, category.getCategoryName());
-        Assert.assertEquals(expectedCategoryDescription, category.getDescription());
-
+        Categories category = objectUnderTest.getCategoryById(EXPECTED_CATEGORY_ID);
+        Assert.assertEquals(EXPECTED_CATEGORY.getCategoryName(), category.getCategoryName());
+        Assert.assertEquals(EXPECTED_CATEGORY.getDescription(), category.getDescription());
     }
 
-    @Test
+    @Test(expected = ObjectNotFoundException.class)
     public void removeCategoryById() throws Exception {
-        Categories categories = objectUnderTest.getCategoryById(8);
+        int currentCategoriesQuantity = objectUnderTest.listCategories().size();
+        objectUnderTest.addCategory(NEW_CATEGORY);
+        objectUnderTest.removeCategoryById(currentCategoriesQuantity + 1);
+        objectUnderTest.getCategoryById(currentCategoriesQuantity + 1);
     }
 
 }
