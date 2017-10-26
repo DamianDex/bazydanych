@@ -21,8 +21,8 @@
         <!-- Drop and re-create all database on startup -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Annotated entity classes -->
-        <mapping class="entity.Categories"/>
+        <!-- Annotaentitiestity classes -->
+        <mapping class="entities.Categories"/>
 
     </session-factory>
 </hibernate-configuration>
