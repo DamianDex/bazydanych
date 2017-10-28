@@ -2,13 +2,9 @@ package entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Categories implements Serializable {
@@ -21,12 +17,23 @@ public class Categories implements Serializable {
     private String categoryName;
     private String description;
 
+    @OneToMany
+    private Set<Products> products;
+
     public Categories() {
     }
 
     public Categories(String categoryName, String description) {
         this.categoryName = categoryName;
         this.description = description;
+    }
+
+    public Set<Products> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Products> products) {
+        this.products = products;
     }
 
     public int getCategoryId() {
