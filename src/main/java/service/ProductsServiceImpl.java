@@ -21,7 +21,7 @@ public class ProductsServiceImpl implements ProductsService {
         productsDAO.updateProduct(products);
     }
 
-    public List<Object> listProductsWithCategories(double minPrice, double maxPrice) {
+    public List<Object[]> listProductsWithCategories(double minPrice, double maxPrice) {
         return productsDAO.listProductsWithCategories(minPrice, maxPrice);
     }
 

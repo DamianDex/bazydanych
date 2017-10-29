@@ -1,5 +1,6 @@
 package dao;
 
+import entities.Categories;
 import entities.Products;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,15 +35,15 @@ public class ProductsDAOImpl implements ProductsDAO {
         finishSession(session);
     }
 
-    public List<Object> listProductsWithCategories(double minPrice, double maxPrice) {
+    public List<Object[]> listProductsWithCategories(double minPrice, double maxPrice) {
         Session session = prepareSession();
         Query query = session.createQuery("from Products p inner join p.categories where unitprice > :minPrice " +
                 "and unitprice < :maxPrice");
         query.setParameter("minPrice", minPrice);
         query.setParameter("maxPrice", maxPrice);
-        List<Object> products = query.list();
-        for (Object product : products) {
-            LOGGER.info("Products list: " + product);
+        List<Object[]> products = query.list();
+        for (Object[] product : products) {
+            LOGGER.info("Products list: " + ((Products) product[0]).toString() +" "+((Categories) product[1]).toString());
         }
         session.close();
         return products;

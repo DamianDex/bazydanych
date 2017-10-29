@@ -10,7 +10,7 @@ public interface ProductsDAO {
 
     public void updateProduct(Products products);
 
-    public List<Object> listProductsWithCategories(double minPrice, double maxPrice);
+    public List<Object[]> listProductsWithCategories(double minPrice, double maxPrice);
 
     public Products getProductById(int productid);
 
