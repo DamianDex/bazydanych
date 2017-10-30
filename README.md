@@ -40,8 +40,13 @@ Inne do uzgodnienia
 https://bazydanych.kanbantool.com/dashboard
 
 <h1>Wybrane technologie</h1>
-Java  
-Hibernate  
-PostgreSQL  
-Jenkins  
-Swing
+Java <br/>
+Hibernate <br/>
+PostgreSQL <br/>  
+Jenkins <br/>  
+Swing <br/>
+AutoIT <br/>
+
+<h1>Projekt interfejsu użytkownika</h1>
+<h3>Składanie zamówień</h3>
+![alt text](https://github.com/DamianDex/bazydanych/blob/master/mocks/MakeAnOrderMock.png)
