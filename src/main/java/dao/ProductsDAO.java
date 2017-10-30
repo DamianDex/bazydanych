@@ -12,6 +12,8 @@ public interface ProductsDAO {
 
     public List<Object[]> listProductsWithCategories(double minPrice, double maxPrice);
 
+    public List<Products> listProducts();
+
     public Products getProductById(int productid);
 
     public void removeProductById(int productid);

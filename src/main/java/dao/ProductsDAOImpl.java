@@ -49,6 +49,17 @@ public class ProductsDAOImpl implements ProductsDAO {
         return products;
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Products> listProducts() {
+        Session session = prepareSession();
+        List<Products> productsList = session.createQuery("from Products").list();
+        for (Products products : productsList) {
+            LOGGER.info("Products List: " + products);
+        }
+        finishSession(session);
+        return productsList;
+    }
+
     public Products getProductById(int productid) {
         Session session = prepareSession();
         Products products = session.load(Products.class, new Integer(productid));
@@ -64,6 +75,7 @@ public class ProductsDAOImpl implements ProductsDAO {
             session.delete(products);
         }
         LOGGER.info("Products deleted successfully, Products details = " + products);
+        finishSession(session);
     }
 
     private void finishSession(Session session) {

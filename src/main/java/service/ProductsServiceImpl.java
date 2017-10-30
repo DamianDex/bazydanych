@@ -25,6 +25,10 @@ public class ProductsServiceImpl implements ProductsService {
         return productsDAO.listProductsWithCategories(minPrice, maxPrice);
     }
 
+    public List<Products> listProducts(){
+        return productsDAO.listProducts();
+    }
+
     public Products getProductById(int productid) {
         return productsDAO.getProductById(productid);
     }
