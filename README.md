@@ -49,4 +49,4 @@ AutoIT <br/>
 
 <h1>Projekt interfejsu użytkownika</h1>
 <h3>Składanie zamówień</h3>
-![alt text](https://github.com/DamianDex/bazydanych/blob/master/mocks/MakeAnOrderMock.png)
+<img alt="Make an Order Mock" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/MakeAnOrderMock.png">
