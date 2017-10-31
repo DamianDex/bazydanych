@@ -8,6 +8,12 @@ public class MainPanel {
     private JPanel mainPanel;
     private JTabbedPane tabsPanel;
     private JPanel categoriesTab;
+    private JPanel ordersTab;
+
+
+    public MainPanel() {
+
+    }
 
     public static void main(String[] args) {
         JFrame jFrame = new JFrame("Bazy danych");
