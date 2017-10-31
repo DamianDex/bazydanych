@@ -24,6 +24,7 @@
         <!-- Annotaentitiestity classes -->
         <mapping class="entities.Categories"/>
         <mapping class="entities.Products"/>
+        <mapping class="entities.Customers"/>
 
     </session-factory>
 </hibernate-configuration>
