@@ -60,6 +60,19 @@ public class ProductsDAOImpl implements ProductsDAO {
         return productsList;
     }
 
+    @Override
+    public List<Products> listProductsByName(String nameStart) {
+        Session session = prepareSession();
+        Query query = session.createQuery("from Products where lower(productname) like :nameStart ");
+        query.setParameter("nameStart", nameStart + "%");
+        List<Products> productsList = query.list();
+        for (Products products : productsList) {
+            LOGGER.info("Products List: " + products);
+        }
+        finishSession(session);
+        return productsList;
+    }
+
     public Products getProductById(int productid) {
         Session session = prepareSession();
         Products products = session.load(Products.class, new Integer(productid));

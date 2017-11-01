@@ -29,6 +29,9 @@ public class ProductsServiceImpl implements ProductsService {
         return productsDAO.listProducts();
     }
 
+    @Override
+    public List<Products> listProductsByName(String nameStart) {return productsDAO.listProductsByName(nameStart);}
+
     public Products getProductById(int productid) {
         return productsDAO.getProductById(productid);
     }

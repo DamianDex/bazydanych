@@ -81,6 +81,8 @@ public class Products implements Serializable {
         this.quantityperunit = quantityperunit;
     }
 
+    public String getQuantityperunit() {return quantityperunit; }
+
     public double getUnitprice() {
         return unitprice;
     }

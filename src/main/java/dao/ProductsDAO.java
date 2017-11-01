@@ -14,6 +14,8 @@ public interface ProductsDAO {
 
     public List<Products> listProducts();
 
+    public List<Products> listProductsByName(String nameStart);
+
     public Products getProductById(int productid);
 
     public void removeProductById(int productid);
