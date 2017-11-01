@@ -172,7 +172,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="f52ac" class="javax.swing.JTable" binding="table2" default-binding="true">
+              <component id="f52ac" class="javax.swing.JTable" binding="ordersTable">
                 <constraints/>
                 <properties/>
               </component>
@@ -204,7 +204,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="2e1ed" class="javax.swing.JTable" binding="table1" custom-create="true" default-binding="true">
+              <component id="2e1ed" class="javax.swing.JTable" binding="productsTable" custom-create="true">
                 <constraints/>
                 <properties/>
               </component>

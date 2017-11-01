@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductsAbstractTableModel extends AbstractTableModel {
 
-    private final String[] cols = {"Product ID", "Product Name", "Quantity Per Unit", "Unit Price", "Units In Stock",
+    private final String[] COLUMN_NAMES = {"Product ID", "Product Name", "Quantity Per Unit", "Unit Price", "Units In Stock",
                                     "Units On Order", "Actions"};
     private List<Products> productsList;
 
@@ -31,7 +31,11 @@ public class ProductsAbstractTableModel extends AbstractTableModel {
     public Class getColumnClass(int c) {
         switch(c){
             case 0:
+            case 4:
+            case 5:
                 return Integer.class;
+            case 3:
+                return Double.class;
             case 6:
                 return JButton.class;
             default:
@@ -46,7 +50,7 @@ public class ProductsAbstractTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int c) {
-        return cols[c];
+        return COLUMN_NAMES[c];
     }
 
     @Override

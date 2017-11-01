@@ -38,8 +38,8 @@ public class OrderPanel extends JPanel{
     private JPanel ProductsPanel;
     private JPanel OrderDetailsPanel;
     private PlaceholderTextField productsFilterTextField;
-    private JTable table1;
-    private JTable table2;
+    private JTable productsTable;
+    private JTable ordersTable;
 
     private CustomersServiceImpl customersService = new ServiceHelper().getCustomersServiceImpl();
     private ProductsServiceImpl productsService = new ServiceHelper().getProductsService();
@@ -56,7 +56,7 @@ public class OrderPanel extends JPanel{
         pushCustomersIdsFromDb();
         radioCustomerGroup.add(newCustomerRadioButton);
         radioCustomerGroup.add(existingCustomerRadioButton);
-        ((ProductsAbstractTableModel) table1.getModel()).setProductsList(productsService.listProducts());
+        ((ProductsAbstractTableModel) productsTable.getModel()).setProductsList(productsService.listProducts());
     }
 
     private void addActionListeners(){
@@ -101,7 +101,7 @@ public class OrderPanel extends JPanel{
 
     //TODO add action to jTable button
     private void addActionListenerToProductsTableButton(){
-        TableModel model = (ProductsAbstractTableModel) table1.getModel();
+        TableModel model = (ProductsAbstractTableModel) productsTable.getModel();
         model.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -116,7 +116,7 @@ public class OrderPanel extends JPanel{
         productsFilterTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                ((ProductsAbstractTableModel) table1.getModel())
+                ((ProductsAbstractTableModel) productsTable.getModel())
                         .setProductsList(productsService.listProductsByName(productsFilterTextField.getText().toLowerCase()));
             }
         });
@@ -158,8 +158,8 @@ public class OrderPanel extends JPanel{
     }
 
     private void createUIComponents() {
-        table1 = new JTable(new ProductsAbstractTableModel());
-        TableColumn actionCol = table1.getColumnModel().getColumn(6);
+        productsTable = new JTable(new ProductsAbstractTableModel());
+        TableColumn actionCol = productsTable.getColumnModel().getColumn(6);
         actionCol.setCellRenderer(new ProductsButtonTableRenderer());
         actionCol.setCellEditor(new ProductsButtonTableEditor());
     }
