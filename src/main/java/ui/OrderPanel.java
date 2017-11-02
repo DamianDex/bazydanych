@@ -9,6 +9,7 @@ import ui.custom.*;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -40,12 +41,16 @@ public class OrderPanel extends JPanel{
     private PlaceholderTextField productsFilterTextField;
     private JTable productsTable;
     private JTable ordersTable;
+    private JTextField textField1;
 
     private CustomersServiceImpl customersService = new ServiceHelper().getCustomersServiceImpl();
     private ProductsServiceImpl productsService = new ServiceHelper().getProductsService();
 
     private Customers selectedCustomer;
     private ButtonGroup radioCustomerGroup = new ButtonGroup();
+
+    private static final String[] ORDERS_COLUMN_NAMES = {"Order ID", "Product ID", "Unit Price", "Quantity", "Discount", "Total for Product"};
+    private static final int INITIAL_ORDERS_ROW_NUMBER = 0;
 
     public OrderPanel(){
         initUI();
@@ -57,6 +62,15 @@ public class OrderPanel extends JPanel{
         radioCustomerGroup.add(newCustomerRadioButton);
         radioCustomerGroup.add(existingCustomerRadioButton);
         ((ProductsAbstractTableModel) productsTable.getModel()).setProductsList(productsService.listProducts());
+        initEmptyOrdersTable();
+    }
+
+    private void initEmptyOrdersTable() {
+        DefaultTableModel model = new DefaultTableModel(INITIAL_ORDERS_ROW_NUMBER, ORDERS_COLUMN_NAMES.length);
+        model.setColumnIdentifiers(ORDERS_COLUMN_NAMES);
+        ordersTable.setModel(model);
+        ordersTable.setRowSelectionAllowed(true);
+        ordersTable.setCellSelectionEnabled(false);
     }
 
     private void addActionListeners(){
