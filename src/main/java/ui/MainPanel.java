@@ -9,6 +9,8 @@ public class MainPanel {
     private JTabbedPane tabsPanel;
     private JPanel categoriesTab;
     private JPanel ordersTab;
+    private JPanel productsTab;
+    private OrderPanel orderPanel1;
 
 
     public MainPanel() {
