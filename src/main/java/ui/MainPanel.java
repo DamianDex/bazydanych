@@ -10,8 +10,6 @@ public class MainPanel {
     private JPanel categoriesTab;
     private JPanel ordersTab;
     private JPanel productsTab;
-    private OrderPanel orderPanel1;
-
 
     public MainPanel() {
 
@@ -24,7 +22,7 @@ public class MainPanel {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();
         jFrame.setVisible(true);
-        jFrame.setSize(600, 600);
+        jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         mainPanel.initUI();
     }
