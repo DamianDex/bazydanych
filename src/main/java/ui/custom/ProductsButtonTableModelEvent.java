@@ -5,11 +5,11 @@ import entities.Products;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 
-public class ProductsButtonTableModelEvent extends TableModelEvent{
+public class ProductsButtonTableModelEvent extends TableModelEvent {
 
     private Products product;
 
-    public ProductsButtonTableModelEvent(TableModel source, Products product){
+    public ProductsButtonTableModelEvent(TableModel source, Products product) {
         this(source);
         this.product = product;
     }

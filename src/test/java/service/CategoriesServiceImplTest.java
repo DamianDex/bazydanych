@@ -2,8 +2,6 @@ package service;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by farad on 2017-10-26.
  */

@@ -7,11 +7,11 @@ public class PlaceholderTextField extends JTextField {
 
     private String placeholder;
 
-    public void setPlaceholder(String placeholder){
+    public void setPlaceholder(String placeholder) {
         this.placeholder = placeholder;
     }
 
-    public String getPlaceholder(){
+    public String getPlaceholder() {
         return this.placeholder;
     }
 

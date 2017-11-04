@@ -25,12 +25,14 @@ public class ProductsServiceImpl implements ProductsService {
         return productsDAO.listProductsWithCategories(minPrice, maxPrice);
     }
 
-    public List<Products> listProducts(){
+    public List<Products> listProducts() {
         return productsDAO.listProducts();
     }
 
     @Override
-    public List<Products> listProductsByName(String nameStart) {return productsDAO.listProductsByName(nameStart);}
+    public List<Products> listProductsByName(String nameStart) {
+        return productsDAO.listProductsByName(nameStart);
+    }
 
     public Products getProductById(int productid) {
         return productsDAO.getProductById(productid);

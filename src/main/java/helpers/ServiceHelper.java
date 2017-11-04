@@ -2,7 +2,6 @@ package helpers;
 
 import dao.CategoriesDAOImpl;
 import dao.CustomersDAOImpl;
-import dao.ProductsDAO;
 import dao.ProductsDAOImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -23,7 +22,7 @@ public class ServiceHelper {
         return categoriesService;
     }
 
-    public ProductsServiceImpl getProductsService(){
+    public ProductsServiceImpl getProductsService() {
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         ProductsDAOImpl productsDAO = new ProductsDAOImpl();
@@ -35,7 +34,7 @@ public class ServiceHelper {
         return productsService;
     }
 
-    public CustomersServiceImpl getCustomersServiceImpl(){
+    public CustomersServiceImpl getCustomersServiceImpl() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         CustomersDAOImpl customersDAO = new CustomersDAOImpl(sessionFactory);
 

@@ -14,7 +14,7 @@ public class CustomersDAOImpl implements CustomersDAO {
     private static final Logger LOGGER = LoggerFactory.logger(CategoriesDAOImpl.class);
     private final SessionHelper sessionHelper;
 
-    public CustomersDAOImpl(SessionFactory sessionFactory){
+    public CustomersDAOImpl(SessionFactory sessionFactory) {
         sessionHelper = new SessionHelper(sessionFactory);
     }
 

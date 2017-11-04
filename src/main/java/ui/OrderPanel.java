@@ -12,14 +12,13 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-public class OrderPanel extends JPanel{
+public class OrderPanel extends JPanel {
     private JComboBox customersIdComboBox;
     private JPanel CustomersDetailsPanel;
     private JRadioButton newCustomerRadioButton;
@@ -52,12 +51,12 @@ public class OrderPanel extends JPanel{
     private static final String[] ORDERS_COLUMN_NAMES = {"Order ID", "Product ID", "Unit Price", "Quantity", "Discount", "Total for Product"};
     private static final int INITIAL_ORDERS_ROW_NUMBER = 0;
 
-    public OrderPanel(){
+    public OrderPanel() {
         initUI();
         addActionListeners();
     }
 
-    private void initUI(){
+    private void initUI() {
         pushCustomersIdsFromDb();
         radioCustomerGroup.add(newCustomerRadioButton);
         radioCustomerGroup.add(existingCustomerRadioButton);
@@ -73,7 +72,7 @@ public class OrderPanel extends JPanel{
         ordersTable.setCellSelectionEnabled(false);
     }
 
-    private void addActionListeners(){
+    private void addActionListeners() {
         addActionListenerToCustomersIdComboBox();
         addActionListenerToNewCustomerRadioButton();
         addActionListenerToExisitingCustomerRadioButton();
@@ -81,7 +80,7 @@ public class OrderPanel extends JPanel{
         addActionListenerToProductsFilterTextField();
     }
 
-    private void addActionListenerToNewCustomerRadioButton(){
+    private void addActionListenerToNewCustomerRadioButton() {
         newCustomerRadioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 clearTextFields();
@@ -90,43 +89,43 @@ public class OrderPanel extends JPanel{
         });
     }
 
-    private void addActionListenerToExisitingCustomerRadioButton(){
+    private void addActionListenerToExisitingCustomerRadioButton() {
         existingCustomerRadioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                if (selectedCustomer != null )
+                if (selectedCustomer != null)
                     setTextFields(selectedCustomer);
                 customersIdComboBox.setEnabled(true);
             }
         });
     }
 
-    private void addActionListenerToCustomersIdComboBox(){
+    private void addActionListenerToCustomersIdComboBox() {
         customersIdComboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-            selectedCustomer = new Customers();
-            if (!customersIdComboBox.getSelectedItem().equals("")) {
-                selectedCustomer = customersService.getCustomerById((String) customersIdComboBox.getSelectedItem());
-                setTextFields(selectedCustomer);
-            } else
-                clearTextFields();
+                selectedCustomer = new Customers();
+                if (!customersIdComboBox.getSelectedItem().equals("")) {
+                    selectedCustomer = customersService.getCustomerById((String) customersIdComboBox.getSelectedItem());
+                    setTextFields(selectedCustomer);
+                } else
+                    clearTextFields();
             }
         });
     }
 
     //TODO add action to jTable button
-    private void addActionListenerToProductsTableButton(){
+    private void addActionListenerToProductsTableButton() {
         TableModel model = (ProductsAbstractTableModel) productsTable.getModel();
         model.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if (e instanceof ProductsButtonTableModelEvent){
+                if (e instanceof ProductsButtonTableModelEvent) {
                     System.out.println(((ProductsButtonTableModelEvent) e).getProduct().toString());
                 }
             }
         });
     }
 
-    private void addActionListenerToProductsFilterTextField(){
+    private void addActionListenerToProductsFilterTextField() {
         productsFilterTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -136,7 +135,7 @@ public class OrderPanel extends JPanel{
         });
     }
 
-    private void clearTextFields(){
+    private void clearTextFields() {
         companyNameTextField.setText("");
         contactNameTextField.setText("");
         contactTitleTextField.setText("");
@@ -149,7 +148,7 @@ public class OrderPanel extends JPanel{
         faxTextField.setText("");
     }
 
-    private void setTextFields(Customers customers){
+    private void setTextFields(Customers customers) {
         companyNameTextField.setText(customers.getCompanyname());
         contactNameTextField.setText(customers.getContactname());
         contactTitleTextField.setText(customers.getContacttitle());
@@ -162,11 +161,11 @@ public class OrderPanel extends JPanel{
         faxTextField.setText(customers.getFax());
     }
 
-    private void pushCustomersIdsFromDb(){
+    private void pushCustomersIdsFromDb() {
         List<Customers> customersList = customersService.listCustomers();
         DefaultComboBoxModel comboModel = (DefaultComboBoxModel) customersIdComboBox.getModel();
         comboModel.addElement(new String(""));
-        for (Customers customers: customersList){
+        for (Customers customers : customersList) {
             comboModel.addElement(customers.getCustomerid());
         }
     }

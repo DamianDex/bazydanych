@@ -2,8 +2,6 @@ package service;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class ProductsServiceImplTest {
     @Test
     public void setProductsDAO() throws Exception {

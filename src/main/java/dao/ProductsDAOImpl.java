@@ -8,8 +8,6 @@ import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.hibernate.query.Query;
 import org.jboss.logging.Logger;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ProductsDAOImpl implements ProductsDAO {
@@ -43,7 +41,7 @@ public class ProductsDAOImpl implements ProductsDAO {
         query.setParameter("maxPrice", maxPrice);
         List<Object[]> products = query.list();
         for (Object[] product : products) {
-            LOGGER.info("Products list: " + ((Products) product[0]).toString() +" "+((Categories) product[1]).toString());
+            LOGGER.info("Products list: " + ((Products) product[0]).toString() + " " + ((Categories) product[1]).toString());
         }
         session.close();
         return products;
@@ -84,7 +82,7 @@ public class ProductsDAOImpl implements ProductsDAO {
     public void removeProductById(int productid) {
         Session session = prepareSession();
         Products products = session.load(Products.class, new Integer(productid));
-        if (products != null){
+        if (products != null) {
             session.delete(products);
         }
         LOGGER.info("Products deleted successfully, Products details = " + products);

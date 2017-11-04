@@ -1,18 +1,16 @@
 package ui.custom;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.EventObject;
 
 public class ProductsButtonTableEditor extends AbstractCellEditor implements TableCellEditor {
 
     private JButton button;
     private Boolean editorValue;
 
-    public ProductsButtonTableEditor(){
+    public ProductsButtonTableEditor() {
         button = new JButton();
         //button.setOpaque(true);
         button.addActionListener((ActionEvent e) -> {

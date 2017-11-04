@@ -10,7 +10,7 @@ import java.util.List;
 public class ProductsAbstractTableModel extends AbstractTableModel {
 
     private final String[] COLUMN_NAMES = {"Product ID", "Product Name", "Quantity Per Unit", "Unit Price", "Units In Stock",
-                                    "Units On Order", "Actions"};
+            "Units On Order", "Actions"};
     private List<Products> productsList;
 
 
@@ -29,7 +29,7 @@ public class ProductsAbstractTableModel extends AbstractTableModel {
 
     @Override
     public Class getColumnClass(int c) {
-        switch(c){
+        switch (c) {
             case 0:
             case 4:
             case 5:

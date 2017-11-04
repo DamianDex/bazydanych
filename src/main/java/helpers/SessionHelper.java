@@ -7,7 +7,7 @@ public class SessionHelper {
 
     private SessionFactory sessionFactory;
 
-    public SessionHelper(SessionFactory sessionFactory){
+    public SessionHelper(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

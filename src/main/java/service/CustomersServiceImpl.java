@@ -9,7 +9,7 @@ public class CustomersServiceImpl implements CustomersService {
 
     private CustomersDAO customersDAO;
 
-    public void setCustomersDAO(CustomersDAO customersDAO){
+    public void setCustomersDAO(CustomersDAO customersDAO) {
         this.customersDAO = customersDAO;
     }
 

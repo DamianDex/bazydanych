@@ -20,7 +20,8 @@ public class Customers {
     private String phone;
     private String fax;
 
-    public Customers(){}
+    public Customers() {
+    }
 
     public Customers(String customerid, String companyname, String contactname, String contacttitle, String address,
                      String city, String region, String postalcode, String country, String phone, String fax) {
@@ -142,7 +143,7 @@ public class Customers {
                 '}';
     }
 
-    public String[] toArray(){
+    public String[] toArray() {
         String[] fields = {customerid, companyname, contactname, contacttitle, address, city, region, postalcode,
                 country, phone, fax};
         return fields;

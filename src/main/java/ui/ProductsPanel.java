@@ -1,15 +1,11 @@
 package ui;
 
-import entities.Categories;
 import entities.Products;
 import helpers.ServiceHelper;
 import service.CategoriesServiceImpl;
 import service.ProductsServiceImpl;
-import ui.custom.PlaceholderTextField;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,21 +34,21 @@ public class ProductsPanel extends JPanel {
     private ProductsServiceImpl productsService = new ServiceHelper().getProductsService();
     private CategoriesServiceImpl categoriesService = new ServiceHelper().getCategoriesService();
 
-    private static final String[] COLUMN_HEADINGS = {"Product Id","Product Name", "Categoryid",
-                                                    "SupplierId", "Quantity Per Unit", "Unit Price",
-                                                    "Units In Stock", "Units On Order", "Reorder Level", "Discontinued"};
+    private static final String[] COLUMN_HEADINGS = {"Product Id", "Product Name", "Categoryid",
+            "SupplierId", "Quantity Per Unit", "Unit Price",
+            "Units In Stock", "Units On Order", "Reorder Level", "Discontinued"};
     private static final int INITIAL_ROW_NUMBER = 0;
 
     private Products selectedProduct;
 
-    public ProductsPanel(){
+    public ProductsPanel() {
         initUi();
         addAllActionListeners();
     }
 
     private void addAllActionListeners() {
         addActionListenerToReadAllBtn();
-       // addActionListenerToTableRowSelection();
+        // addActionListenerToTableRowSelection();
         //addActionListenerToUpdateBtn();
     }
 
@@ -95,7 +91,7 @@ public class ProductsPanel extends JPanel {
 //        });
 //    }
 
-    private void initUi(){
+    private void initUi() {
         initEmptyProductsTable();
     }
 

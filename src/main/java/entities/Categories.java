@@ -2,7 +2,10 @@ package entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -70,7 +73,7 @@ public class Categories implements Serializable {
     }
 
     public String[] toArray() {
-        String [] fields = {String.valueOf(categoryId), categoryName, description};
+        String[] fields = {String.valueOf(categoryId), categoryName, description};
         return fields;
     }
 }

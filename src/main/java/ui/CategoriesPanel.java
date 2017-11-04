@@ -1,20 +1,19 @@
 package ui;
 
-import dao.CategoriesDAOImpl;
 import entities.Categories;
 import helpers.ServiceHelper;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import service.CategoriesServiceImpl;
 
+import javax.persistence.PersistenceException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Comparator;
 import java.util.List;
 
 public class CategoriesPanel extends JPanel {
@@ -27,26 +26,72 @@ public class CategoriesPanel extends JPanel {
     private JButton addNewButton;
     private JButton updateButton;
     private JButton deleteButton;
+    private JPanel buttonPanel;
 
     private CategoriesServiceImpl categoriesService = new ServiceHelper().getCategoriesService();
 
-    private static final String[] COLUMN_HEADINGS = {"Category Id","Category Name", "Category Description"};
+    private static final String[] COLUMN_HEADINGS = {"Category Id", "Category Name", "Category Description"};
     private static final int INITIAL_ROW_NUMBER = 0;
+    private static final String CATEGORY_CANT_REMOVE = "Category still used by Products";
+    private static final String CATEGORY_NAME_LENGTH = "Category name should max length is 15";
 
     private Categories selectedCategory;
 
 
     public CategoriesPanel() {
-
         initUI();
         addAllActionListeners();
-
     }
 
     private void addAllActionListeners() {
         addActionListenerToReadAllBtn();
         addActionListenerToTableRowSelection();
         addActionListenerToUpdateBtn();
+        addActionListenerToAddNewBtn();
+        addActionListenerToDeleteBtn();
+        addActionListenerToCategoryNameTextField();
+    }
+
+    private void addActionListenerToCategoryNameTextField() {
+        categoryName.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (categoryName.getText().length() > 15)
+                    showErrorDialog(CATEGORY_NAME_LENGTH);
+            }
+        });
+    }
+
+    private void addActionListenerToDeleteBtn() {
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    categoriesService.removeCategoryById(selectedCategory.getCategoryId());
+                } catch (PersistenceException ex) {
+                    showErrorDialog(CATEGORY_CANT_REMOVE);
+                }
+                pushDataFromDbToTable();
+            }
+        });
+    }
+
+    private void showErrorDialog(String errorMsg) {
+        JOptionPane.showMessageDialog(new JFrame(), errorMsg, "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void addActionListenerToAddNewBtn() {
+        addNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String categoryToAddName = categoryName.getText();
+                String categoryToAddDescription = categoryDescription.getText();
+                Categories categoryToAdd = new Categories(categoryToAddName, categoryToAddDescription);
+                categoriesService.addCategory(categoryToAdd);
+                pushDataFromDbToTable();
+            }
+        });
     }
 
     private void addActionListenerToReadAllBtn() {
@@ -60,7 +105,6 @@ public class CategoriesPanel extends JPanel {
     private void addActionListenerToUpdateBtn() {
         updateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                selectedCategory.setCategoryId(Integer.parseInt(categoryId.getText()));
                 selectedCategory.setCategoryName(categoryName.getText());
                 selectedCategory.setDescription(categoryDescription.getText());
                 categoriesService.updateCategory(selectedCategory);
@@ -73,6 +117,17 @@ public class CategoriesPanel extends JPanel {
         List<Categories> categoriesList = categoriesService.listCategories();
         DefaultTableModel tableModel = (DefaultTableModel) categoriesTable.getModel();
         tableModel.setRowCount(0); //clear JTable
+
+        //FIXME: Maybe should be sorted in query ???
+        categoriesList.sort(new Comparator<Categories>() {
+            @Override
+            public int compare(Categories c1, Categories c2) {
+                if (c1.getCategoryId() > c2.getCategoryId())
+                    return 1;
+                else
+                    return -1;
+            }
+        });
 
         for (Categories category : categoriesList) {
             tableModel.addRow(category.toArray());
@@ -88,7 +143,6 @@ public class CategoriesPanel extends JPanel {
                 try {
                     Integer id = Integer.valueOf(categoriesTable.getValueAt(categoriesTable.getSelectedRow(), 0).toString());
                     selectedCategory = categoriesService.getCategoryById(id);
-                    categoryId.setText(String.valueOf(selectedCategory.getCategoryId()));
                     categoryName.setText(selectedCategory.getCategoryName());
                     categoryDescription.setText(selectedCategory.getDescription());
                 } catch (Exception ex) {

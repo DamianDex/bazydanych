@@ -2,8 +2,8 @@ package entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 public class Products implements Serializable {
@@ -14,7 +14,7 @@ public class Products implements Serializable {
     private int productid;
 
     @ManyToOne
-    @JoinColumn(name="categoryId")
+    @JoinColumn(name = "categoryId")
     private Categories categories;
 
     private String productname;
@@ -26,10 +26,11 @@ public class Products implements Serializable {
     private int reorderlevel;
     private int discontinued;
 
-    public Products(){}
+    public Products() {
+    }
 
     public Products(String productname, int supplierid, String quantityperunit, double unitprice, int unitsinstock,
-                    int unitsonorder, int reorderlevel, int discontinued){
+                    int unitsonorder, int reorderlevel, int discontinued) {
         this.productname = productname;
         this.supplierid = supplierid;
         this.quantityperunit = quantityperunit;
@@ -41,7 +42,7 @@ public class Products implements Serializable {
     }
 
     public Products(String productname, int supplierid, String quantityperunit, double unitprice, int unitsinstock,
-                    int unitsonorder, int reorderlevel, int discontinued, Categories categories){
+                    int unitsonorder, int reorderlevel, int discontinued, Categories categories) {
         this.productname = productname;
         this.supplierid = supplierid;
         this.quantityperunit = quantityperunit;
@@ -81,7 +82,9 @@ public class Products implements Serializable {
         this.quantityperunit = quantityperunit;
     }
 
-    public String getQuantityperunit() {return quantityperunit; }
+    public String getQuantityperunit() {
+        return quantityperunit;
+    }
 
     public double getUnitprice() {
         return unitprice;
@@ -142,7 +145,7 @@ public class Products implements Serializable {
     public String[] toArray() {
         String[] fields = {String.valueOf(productid), productname, String.valueOf(supplierid), quantityperunit,
                 String.valueOf(unitprice), String.valueOf(unitsinstock), String.valueOf(unitsonorder),
-                    String.valueOf(reorderlevel), String.valueOf(discontinued), categories.toString()};
+                String.valueOf(reorderlevel), String.valueOf(discontinued), categories.toString()};
         return fields;
     }
 }
