@@ -12,15 +12,13 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderPanel extends JPanel {
     private JComboBox customersIdComboBox;
-    private JPanel CustomersDetailsPanel;
     private JRadioButton newCustomerRadioButton;
     private JRadioButton existingCustomerRadioButton;
     private PlaceholderTextField companyNameTextField;
@@ -41,15 +39,21 @@ public class OrderPanel extends JPanel {
     private JTable productsTable;
     private JTable ordersTable;
     private JTextField textField1;
+    private JPanel CustomersDetailsPanel;
+    private JButton loadProductsButton;
 
     private CustomersServiceImpl customersService = new ServiceHelper().getCustomersServiceImpl();
     private ProductsServiceImpl productsService = new ServiceHelper().getProductsService();
 
+
+    private Map<String, Customers> customersMap;
     private Customers selectedCustomer;
     private ButtonGroup radioCustomerGroup = new ButtonGroup();
 
     private static final String[] ORDERS_COLUMN_NAMES = {"Order ID", "Product ID", "Unit Price", "Quantity", "Discount", "Total for Product"};
     private static final int INITIAL_ORDERS_ROW_NUMBER = 0;
+
+    private ProductsAbstractTableModel productsAbstractTableModel;
 
     public OrderPanel() {
         initUI();
@@ -57,10 +61,8 @@ public class OrderPanel extends JPanel {
     }
 
     private void initUI() {
-        pushCustomersIdsFromDb();
         radioCustomerGroup.add(newCustomerRadioButton);
         radioCustomerGroup.add(existingCustomerRadioButton);
-        ((ProductsAbstractTableModel) productsTable.getModel()).setProductsList(productsService.listProducts());
         initEmptyOrdersTable();
     }
 
@@ -77,50 +79,44 @@ public class OrderPanel extends JPanel {
         addActionListenerToNewCustomerRadioButton();
         addActionListenerToExisitingCustomerRadioButton();
         addActionListenerToProductsTableButton();
+        addActionListenerToLoadProductsButton();
         addActionListenerToProductsFilterTextField();
     }
 
     private void addActionListenerToNewCustomerRadioButton() {
-        newCustomerRadioButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                clearTextFields();
-                customersIdComboBox.setEnabled(false);
-            }
+        newCustomerRadioButton.addActionListener(actionEvent -> {
+            clearTextFields();
+            customersIdComboBox.setEnabled(false);
         });
     }
 
     private void addActionListenerToExisitingCustomerRadioButton() {
-        existingCustomerRadioButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (selectedCustomer != null)
-                    setTextFields(selectedCustomer);
-                customersIdComboBox.setEnabled(true);
+        existingCustomerRadioButton.addActionListener(actionEvent -> {
+            if (customersMap == null){
+                loadCustomersData();
             }
+            if (selectedCustomer != null)
+                setTextFields(selectedCustomer);
+            customersIdComboBox.setEnabled(true);
         });
     }
 
     private void addActionListenerToCustomersIdComboBox() {
-        customersIdComboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                selectedCustomer = new Customers();
-                if (!customersIdComboBox.getSelectedItem().equals("")) {
-                    selectedCustomer = customersService.getCustomerById((String) customersIdComboBox.getSelectedItem());
-                    setTextFields(selectedCustomer);
-                } else
-                    clearTextFields();
-            }
+        customersIdComboBox.addActionListener(actionEvent -> {
+            selectedCustomer = new Customers();
+            if (!customersIdComboBox.getSelectedItem().equals("")) {
+                selectedCustomer = customersMap.get(customersIdComboBox.getSelectedItem());
+                setTextFields(selectedCustomer);
+            } else
+                clearTextFields();
         });
     }
 
     //TODO add action to jTable button
     private void addActionListenerToProductsTableButton() {
-        TableModel model = (ProductsAbstractTableModel) productsTable.getModel();
-        model.addTableModelListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                if (e instanceof ProductsButtonTableModelEvent) {
-                    System.out.println(((ProductsButtonTableModelEvent) e).getProduct().toString());
-                }
+        productsAbstractTableModel.addTableModelListener(e -> {
+            if (e instanceof ProductsButtonTableModelEvent) {
+                System.out.println(((ProductsButtonTableModelEvent) e).getProduct().toString());
             }
         });
     }
@@ -129,10 +125,32 @@ public class OrderPanel extends JPanel {
         productsFilterTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                ((ProductsAbstractTableModel) productsTable.getModel())
-                        .setProductsList(productsService.listProductsByName(productsFilterTextField.getText().toLowerCase()));
+                if (!productsFilterTextField.getText().isEmpty())
+                    productsAbstractTableModel.filterProductsList(productsFilterTextField.getText());
+                else
+                    productsAbstractTableModel.showAllProducts();
             }
         });
+    }
+
+    private void addActionListenerToLoadProductsButton(){
+        loadProductsButton.addActionListener(e -> {
+            if (productsAbstractTableModel.isProductsListEmpty())
+                productsAbstractTableModel.setProductsList(productsService.listProducts());
+            else
+                productsAbstractTableModel.showAllProducts();
+                productsFilterTextField.setText("");
+        });
+    }
+
+    private void loadCustomersData(){
+        customersMap = new HashMap<>();
+        DefaultComboBoxModel comboModel = (DefaultComboBoxModel) customersIdComboBox.getModel();
+        comboModel.addElement("");
+        for (Customers c: customersService.listCustomers()) {
+            customersMap.put(c.getCustomerid(), c);
+            comboModel.addElement(c.getCustomerid());
+        }
     }
 
     private void clearTextFields() {
@@ -161,17 +179,9 @@ public class OrderPanel extends JPanel {
         faxTextField.setText(customers.getFax());
     }
 
-    private void pushCustomersIdsFromDb() {
-        List<Customers> customersList = customersService.listCustomers();
-        DefaultComboBoxModel comboModel = (DefaultComboBoxModel) customersIdComboBox.getModel();
-        comboModel.addElement(new String(""));
-        for (Customers customers : customersList) {
-            comboModel.addElement(customers.getCustomerid());
-        }
-    }
-
     private void createUIComponents() {
-        productsTable = new JTable(new ProductsAbstractTableModel());
+        productsAbstractTableModel = new ProductsAbstractTableModel();
+        productsTable = new JTable(productsAbstractTableModel);
         TableColumn actionCol = productsTable.getColumnModel().getColumn(6);
         actionCol.setCellRenderer(new ProductsButtonTableRenderer());
         actionCol.setCellEditor(new ProductsButtonTableEditor());
