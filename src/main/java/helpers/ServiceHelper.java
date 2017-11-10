@@ -3,11 +3,13 @@ package helpers;
 import dao.CategoriesDAOImpl;
 import dao.CustomersDAOImpl;
 import dao.ProductsDAOImpl;
+import dao.SuppliersDAOImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import service.CategoriesServiceImpl;
 import service.CustomersServiceImpl;
 import service.ProductsServiceImpl;
+import service.SuppliersServiceImpl;
 
 public class ServiceHelper {
 
@@ -32,6 +34,17 @@ public class ServiceHelper {
         productsService.setProductsDAO(productsDAO);
 
         return productsService;
+    }
+
+    public SuppliersServiceImpl getSuppliersService() {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SuppliersDAOImpl suppliersDAO = new SuppliersDAOImpl();
+        suppliersDAO.setSessionFactory(sessionFactory);
+
+        SuppliersServiceImpl suppliersService = new SuppliersServiceImpl();
+        suppliersService.setSuppliersDAO(suppliersDAO);
+
+        return suppliersService;
     }
 
     public CustomersServiceImpl getCustomersServiceImpl() {

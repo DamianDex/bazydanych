@@ -14,11 +14,14 @@ public class Products implements Serializable {
     private int productid;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = " supplierId")
+    private Suppliers suppliers;
+
+    @ManyToOne
+    @JoinColumn(name = " categoryId")
     private Categories categories;
 
     private String productname;
-    private int supplierid;
     private String quantityperunit;
     private double unitprice;
     private int unitsinstock;
@@ -29,10 +32,9 @@ public class Products implements Serializable {
     public Products() {
     }
 
-    public Products(String productname, int supplierid, String quantityperunit, double unitprice, int unitsinstock,
+    public Products(String productname, String quantityperunit, double unitprice, int unitsinstock,
                     int unitsonorder, int reorderlevel, int discontinued) {
         this.productname = productname;
-        this.supplierid = supplierid;
         this.quantityperunit = quantityperunit;
         this.unitprice = unitprice;
         this.unitsinstock = unitsinstock;
@@ -41,10 +43,10 @@ public class Products implements Serializable {
         this.discontinued = discontinued;
     }
 
-    public Products(String productname, int supplierid, String quantityperunit, double unitprice, int unitsinstock,
-                    int unitsonorder, int reorderlevel, int discontinued, Categories categories) {
+    public Products(String productname,String quantityperunit, double unitprice, int unitsinstock,
+                    int unitsonorder, int reorderlevel, int discontinued, Categories categories, Suppliers suppliers) {
         this.productname = productname;
-        this.supplierid = supplierid;
+        this.suppliers = suppliers;
         this.quantityperunit = quantityperunit;
         this.unitprice = unitprice;
         this.unitsinstock = unitsinstock;
@@ -70,20 +72,28 @@ public class Products implements Serializable {
         this.productname = productname;
     }
 
-    public int getSupplierid() {
-        return supplierid;
+    public Categories getCategories() {
+        return categories;
     }
 
-    public void setSupplierid(int supplierid) {
-        this.supplierid = supplierid;
+    public void setCategories(Categories categories) {
+        this.categories = categories;
     }
 
-    public void setQuantityperunit(String quantityperunit) {
-        this.quantityperunit = quantityperunit;
+    public Suppliers getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(Suppliers suppliers) {
+        this.suppliers = suppliers;
     }
 
     public String getQuantityperunit() {
         return quantityperunit;
+    }
+
+    public void setQuantityperunit(String quantityperunit) {
+        this.quantityperunit = quantityperunit;
     }
 
     public double getUnitprice() {
@@ -131,8 +141,8 @@ public class Products implements Serializable {
         return "Products{" +
                 "productid=" + productid +
                 ", categories=" + categories +
+                ", suppliers=" + suppliers +
                 ", productname='" + productname + '\'' +
-                ", supplierid=" + supplierid +
                 ", quantityperunit='" + quantityperunit + '\'' +
                 ", unitprice=" + unitprice +
                 ", unitsinstock=" + unitsinstock +
@@ -143,7 +153,7 @@ public class Products implements Serializable {
     }
 
     public String[] toArray() {
-        String[] fields = {String.valueOf(productid), productname, String.valueOf(supplierid), quantityperunit,
+        String[] fields = {String.valueOf(productid), productname, suppliers.toString(), quantityperunit,
                 String.valueOf(unitprice), String.valueOf(unitsinstock), String.valueOf(unitsonorder),
                 String.valueOf(reorderlevel), String.valueOf(discontinued), categories.toString()};
         return fields;
