@@ -10,6 +10,7 @@ public class MainPanel {
     private JPanel categoriesTab;
     private JPanel ordersTab;
     private JPanel productsTab;
+    private JPanel reportsTab;
 
     public MainPanel() {
 

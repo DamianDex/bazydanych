@@ -10,6 +10,18 @@ public class CategoriesDAOImplTest {
 
     private CategoriesDAOImpl objectUnderTest;
 
+    @Before
+    public void setUp() {
+        objectUnderTest = new CategoriesDAOImpl();
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        objectUnderTest.setSessionFactory(sessionFactory);
+    }
+
+    @After
+    public void tearDown() {
+        //do nothing
+    }
+
     private static final int EXPECTED_CATEGORY_ID = 8;
     private static final String EXPECTED_CATEGORY_NAME = "Seafood";
     private static final String EXPECTED_CATEGORY_DESCRIPTION = "Seaweed and fish";
@@ -23,18 +35,6 @@ public class CategoriesDAOImplTest {
     static {
         EXPECTED_CATEGORY = new Categories(EXPECTED_CATEGORY_NAME, EXPECTED_CATEGORY_DESCRIPTION);
         NEW_CATEGORY = new Categories(NEW_CATEGORY_NAME, NEW_CATEGORY_DESCRIPTION);
-    }
-
-    @Before
-    public void setUp() {
-        objectUnderTest = new CategoriesDAOImpl();
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        objectUnderTest.setSessionFactory(sessionFactory);
-    }
-
-    @After
-    public void tearDown() {
-        //do nothing
     }
 
     @Test
