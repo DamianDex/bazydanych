@@ -138,10 +138,11 @@ public class Products implements Serializable {
 
     @Override
     public String toString() {
+        String catName = (categories != null) ? categories.getCategoryName() : "" ;
         return "Products{" +
                 "productid=" + productid +
                 ", productname='" + productname + '\'' +
-                ", categories=" + categories.getCategoryName() +
+                ", categories=" + catName +
                 ", suppliers=" + suppliers.getCompanyName() +
                 ", quantityperunit='" + quantityperunit + '\'' +
                 ", unitprice=" + unitprice +
