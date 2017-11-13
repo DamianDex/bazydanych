@@ -140,9 +140,9 @@ public class Products implements Serializable {
     public String toString() {
         return "Products{" +
                 "productid=" + productid +
-                ", categories=" + categories +
-                ", suppliers=" + suppliers +
                 ", productname='" + productname + '\'' +
+                ", categories=" + categories.getCategoryName() +
+                ", suppliers=" + suppliers.getCompanyName() +
                 ", quantityperunit='" + quantityperunit + '\'' +
                 ", unitprice=" + unitprice +
                 ", unitsinstock=" + unitsinstock +
@@ -153,9 +153,10 @@ public class Products implements Serializable {
     }
 
     public String[] toArray() {
-        String[] fields = {String.valueOf(productid), productname, suppliers.toString(), quantityperunit,
-                String.valueOf(unitprice), String.valueOf(unitsinstock), String.valueOf(unitsonorder),
-                String.valueOf(reorderlevel), String.valueOf(discontinued), categories.toString()};
+        String[] fields = {String.valueOf(productid), productname, suppliers.getCompanyName(),
+                categories.getCategoryName(),quantityperunit, String.valueOf(unitprice),
+                String.valueOf(unitsinstock), String.valueOf(unitsonorder),String.valueOf(reorderlevel),
+                String.valueOf(discontinued)};
         return fields;
     }
 }

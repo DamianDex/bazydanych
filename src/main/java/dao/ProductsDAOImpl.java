@@ -47,6 +47,20 @@ public class ProductsDAOImpl implements ProductsDAO {
         return products;
     }
 
+    public List<Products> listProductsByPrice(double minPrice,double maxPrice) {
+        Session session = prepareSession();
+        Query query = session.createQuery("from Products p where unitprice >= :minPrice " +
+                "and unitprice <= :maxPrice");
+        query.setParameter("minPrice", minPrice);
+        query.setParameter("maxPrice", maxPrice);
+        List<Products> productsList = query.list();
+        for (Products products : productsList) {
+            LOGGER.info("Products List: " + products);
+        }
+        finishSession(session);
+        return productsList;
+    }
+
     @SuppressWarnings("unchecked")
     public List<Products> listProducts() {
         Session session = prepareSession();

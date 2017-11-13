@@ -12,6 +12,8 @@ public interface ProductsService {
 
     public List<Object[]> listProductsWithCategories(double minPrice, double maxPrice);
 
+    public List<Products> listProductsByPrice(double minPrice, double maxPrice);
+
     public List<Products> listProducts();
 
     public List<Products> listProductsByName(String nameStart);
