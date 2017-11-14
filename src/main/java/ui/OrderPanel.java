@@ -7,14 +7,11 @@ import service.ProductsServiceImpl;
 import ui.custom.*;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class OrderPanel extends JPanel {
@@ -92,7 +89,7 @@ public class OrderPanel extends JPanel {
 
     private void addActionListenerToExisitingCustomerRadioButton() {
         existingCustomerRadioButton.addActionListener(actionEvent -> {
-            if (customersMap == null){
+            if (customersMap == null) {
                 loadCustomersData();
             }
             if (selectedCustomer != null)
@@ -133,21 +130,21 @@ public class OrderPanel extends JPanel {
         });
     }
 
-    private void addActionListenerToLoadProductsButton(){
+    private void addActionListenerToLoadProductsButton() {
         loadProductsButton.addActionListener(e -> {
             if (productsAbstractTableModel.isProductsListEmpty())
                 productsAbstractTableModel.setProductsList(productsService.listProducts());
             else
                 productsAbstractTableModel.showAllProducts();
-                productsFilterTextField.setText("");
+            productsFilterTextField.setText("");
         });
     }
 
-    private void loadCustomersData(){
+    private void loadCustomersData() {
         customersMap = new HashMap<>();
         DefaultComboBoxModel comboModel = (DefaultComboBoxModel) customersIdComboBox.getModel();
         comboModel.addElement("");
-        for (Customers c: customersService.listCustomers()) {
+        for (Customers c : customersService.listCustomers()) {
             customersMap.put(c.getCustomerid(), c);
             comboModel.addElement(c.getCustomerid());
         }

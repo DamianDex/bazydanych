@@ -2,11 +2,12 @@ package entities.keys;
 
 import java.io.Serializable;
 
-public class OrderDetailsKey implements Serializable{
+public class OrderDetailsKey implements Serializable {
     protected int orderId;
     protected int productId;
 
-    public OrderDetailsKey() {}
+    public OrderDetailsKey() {
+    }
 
     public OrderDetailsKey(int orderId, int productId) {
         this.orderId = orderId;

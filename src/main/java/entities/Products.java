@@ -43,7 +43,7 @@ public class Products implements Serializable {
         this.discontinued = discontinued;
     }
 
-    public Products(String productname,String quantityperunit, double unitprice, int unitsinstock,
+    public Products(String productname, String quantityperunit, double unitprice, int unitsinstock,
                     int unitsonorder, int reorderlevel, int discontinued, Categories categories, Suppliers suppliers) {
         this.productname = productname;
         this.suppliers = suppliers;
@@ -138,7 +138,7 @@ public class Products implements Serializable {
 
     @Override
     public String toString() {
-        String catName = (categories != null) ? categories.getCategoryName() : "" ;
+        String catName = (categories != null) ? categories.getCategoryName() : "";
         return "Products{" +
                 "productid=" + productid +
                 ", productname='" + productname + '\'' +
@@ -155,8 +155,8 @@ public class Products implements Serializable {
 
     public String[] toArray() {
         String[] fields = {String.valueOf(productid), productname, suppliers.getCompanyName(),
-                categories.getCategoryName(),quantityperunit, String.valueOf(unitprice),
-                String.valueOf(unitsinstock), String.valueOf(unitsonorder),String.valueOf(reorderlevel),
+                categories.getCategoryName(), quantityperunit, String.valueOf(unitprice),
+                String.valueOf(unitsinstock), String.valueOf(unitsonorder), String.valueOf(reorderlevel),
                 String.valueOf(discontinued)};
         return fields;
     }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "order_details")
 @IdClass(OrderDetailsKey.class)
-public class OrderDetails implements Serializable{
+public class OrderDetails implements Serializable {
 
     @Id
     @ManyToOne

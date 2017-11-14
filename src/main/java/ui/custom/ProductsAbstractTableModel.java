@@ -21,11 +21,11 @@ public class ProductsAbstractTableModel extends AbstractTableModel {
         filteredProductsList = new ArrayList<>();
     }
 
-    public boolean isProductsListEmpty(){
+    public boolean isProductsListEmpty() {
         return productsList.isEmpty();
     }
 
-    public void showAllProducts(){
+    public void showAllProducts() {
         filteredProductsList.clear();
         filteredProductsList.addAll(productsList);
         fireTableDataChanged();
@@ -37,7 +37,7 @@ public class ProductsAbstractTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public void filterProductsList(String name){
+    public void filterProductsList(String name) {
         filteredProductsList = productsList.stream().filter(x -> (x.getProductname().length() >= name.length() &&
                 x.getProductname().toLowerCase().substring(0, name.length())
                         .equals(name.toLowerCase()))).collect(Collectors.toList());

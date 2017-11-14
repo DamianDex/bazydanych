@@ -34,7 +34,7 @@ public class SuppliersDAOImpl implements SuppliersDAO {
     public List<Suppliers> listSuppliers() {
         Session session = prepareSession();
         List<Suppliers> suppliersList = session.createQuery("from Suppliers").list();
-        for(Suppliers supplier : suppliersList){
+        for (Suppliers supplier : suppliersList) {
             LOGGER.info("Supplier List: " + supplier);
         }
         finishSession(session);
@@ -43,7 +43,7 @@ public class SuppliersDAOImpl implements SuppliersDAO {
 
     public Suppliers getSupplierById(int supplierId) {
         Session session = prepareSession();
-        Suppliers suppliers = session.load(Suppliers.class,new Integer(supplierId));
+        Suppliers suppliers = session.load(Suppliers.class, new Integer(supplierId));
         LOGGER.info("Supplier loaded successfully, Supplier details = " + suppliers);
         finishSession(session);
         return suppliers;
@@ -51,9 +51,9 @@ public class SuppliersDAOImpl implements SuppliersDAO {
 
     public void removeSupplierById(int supplierId) {
         Session session = prepareSession();
-        Suppliers supplier = session.load(Suppliers.class,new Integer(supplierId));
-        if(supplier != null ){
-         session.delete(supplier);
+        Suppliers supplier = session.load(Suppliers.class, new Integer(supplierId));
+        if (supplier != null) {
+            session.delete(supplier);
         }
         LOGGER.info("Supplier deleted successfully, Supplier details = " + supplier);
         finishSession(session);

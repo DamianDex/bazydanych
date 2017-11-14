@@ -1,8 +1,7 @@
 package dao;
 
-import entities.Products;
-import entities.keys.OrderDetailsKey;
 import entities.OrderDetails;
+import entities.keys.OrderDetailsKey;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -27,7 +26,6 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
         return orderDetails;
     }
 
-    @Override
     public List<OrderDetails> listOrderDetails() {
         Session session = prepareSession();
         List<OrderDetails> orderDetailsList = session.createQuery("from OrderDetails").list();

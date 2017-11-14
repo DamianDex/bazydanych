@@ -2,12 +2,14 @@ package entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Orders implements Serializable{
+public class Orders implements Serializable {
 
     @Id
     @GenericGenerator(name = "ordersGenerator", strategy = "increment")

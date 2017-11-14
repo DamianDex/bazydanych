@@ -6,12 +6,21 @@ import dao.ProductsDAOImpl;
 import dao.SuppliersDAOImpl;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import service.CategoriesServiceImpl;
-import service.CustomersServiceImpl;
-import service.ProductsServiceImpl;
-import service.SuppliersServiceImpl;
+import reports.SalesReportImpl;
+import service.*;
 
 public class ServiceHelper {
+
+    public SalesReportServiceImpl getSalesReportService() {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SalesReportImpl salesReport = new SalesReportImpl();
+        salesReport.setSessionFactory(sessionFactory);
+
+        SalesReportServiceImpl salesReportService = new SalesReportServiceImpl();
+        salesReportService.setSalesReport(salesReport);
+
+        return salesReportService;
+    }
 
     public CategoriesServiceImpl getCategoriesService() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
