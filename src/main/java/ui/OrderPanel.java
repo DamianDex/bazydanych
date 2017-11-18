@@ -174,7 +174,7 @@ public class OrderPanel extends JPanel {
 
     }
 
-    private JLabel getOrderSummary(){
+    private JScrollPane getOrderSummary(){
         JLabel label = new JLabel();
         label.setFont(new Font("Arial", Font.BOLD, 14));
         label.setText("<html><pre><font size = 14>Summary</font><br>  " +
@@ -193,7 +193,10 @@ public class OrderPanel extends JPanel {
                 "<br><br><font size = 12 color = #007F00>Total price: " + totalPriceTextField.getText() +"</font>"+
                 "<br><br><font size = 12>Do you want to make this order?</font>" +
                 "<br></pre></html>");
-        return label;
+        JScrollPane scrollPane = new JScrollPane(label, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(1000,600));
+        return scrollPane;
     }
 
     private String getOrderDetailsString(){
