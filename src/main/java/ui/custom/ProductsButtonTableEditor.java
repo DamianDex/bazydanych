@@ -9,10 +9,14 @@ public class ProductsButtonTableEditor extends AbstractCellEditor implements Tab
 
     private JButton button;
     private Boolean editorValue;
+    private String name;
+    private Color color;
 
-    public ProductsButtonTableEditor() {
+
+    public ProductsButtonTableEditor(String name, Color color) {
         button = new JButton();
-        //button.setOpaque(true);
+        this.name = name;
+        this.color = color;
         button.addActionListener((ActionEvent e) -> {
             editorValue = true;
             fireEditingStopped();
@@ -28,7 +32,9 @@ public class ProductsButtonTableEditor extends AbstractCellEditor implements Tab
             button.setForeground(table.getForeground());
             button.setBackground(table.getBackground());
         }
-        button.setText("New Order");
+        button.setText(name);
+        button.setForeground(color);
+        button.setFont(new Font("Arial", Font.PLAIN, 20));
         return button;
     }
 

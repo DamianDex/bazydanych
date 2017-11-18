@@ -7,12 +7,15 @@ import service.ProductsServiceImpl;
 import ui.custom.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class OrderPanel extends JPanel {
     private JComboBox customersIdComboBox;
@@ -29,13 +32,13 @@ public class OrderPanel extends JPanel {
     private PlaceholderTextField phoneTextField;
     private PlaceholderTextField faxTextField;
     private JPanel orderPanel;
-    private JButton OrderButton;
+    private JButton orderButton;
     private JPanel ProductsPanel;
     private JPanel OrderDetailsPanel;
     private PlaceholderTextField productsFilterTextField;
     private JTable productsTable;
     private JTable ordersTable;
-    private JTextField textField1;
+    private JTextField totalPriceTextField;
     private JPanel CustomersDetailsPanel;
     private JButton loadProductsButton;
 
@@ -47,10 +50,9 @@ public class OrderPanel extends JPanel {
     private Customers selectedCustomer;
     private ButtonGroup radioCustomerGroup = new ButtonGroup();
 
-    private static final String[] ORDERS_COLUMN_NAMES = {"Order ID", "Product ID", "Unit Price", "Quantity", "Discount", "Total for Product"};
-    private static final int INITIAL_ORDERS_ROW_NUMBER = 0;
 
     private ProductsAbstractTableModel productsAbstractTableModel;
+    private OrdersAbstractTableModel ordersAbstractTableModel;
 
     public OrderPanel() {
         initUI();
@@ -60,15 +62,6 @@ public class OrderPanel extends JPanel {
     private void initUI() {
         radioCustomerGroup.add(newCustomerRadioButton);
         radioCustomerGroup.add(existingCustomerRadioButton);
-        initEmptyOrdersTable();
-    }
-
-    private void initEmptyOrdersTable() {
-        DefaultTableModel model = new DefaultTableModel(INITIAL_ORDERS_ROW_NUMBER, ORDERS_COLUMN_NAMES.length);
-        model.setColumnIdentifiers(ORDERS_COLUMN_NAMES);
-        ordersTable.setModel(model);
-        ordersTable.setRowSelectionAllowed(true);
-        ordersTable.setCellSelectionEnabled(false);
     }
 
     private void addActionListeners() {
@@ -78,6 +71,8 @@ public class OrderPanel extends JPanel {
         addActionListenerToProductsTableButton();
         addActionListenerToLoadProductsButton();
         addActionListenerToProductsFilterTextField();
+        addActionListenerToOrdersTableButton();
+        addActionListenerToMakeOrderButton();
     }
 
     private void addActionListenerToNewCustomerRadioButton() {
@@ -109,14 +104,31 @@ public class OrderPanel extends JPanel {
         });
     }
 
-    //TODO add action to jTable button
     private void addActionListenerToProductsTableButton() {
         productsAbstractTableModel.addTableModelListener(e -> {
             if (e instanceof ProductsButtonTableModelEvent) {
-                System.out.println(((ProductsButtonTableModelEvent) e).getProduct().toString());
+                ordersAbstractTableModel.addNewOrder(((ProductsButtonTableModelEvent) e).getProduct());
             }
         });
     }
+
+    private void addActionListenerToOrdersTableButton(){
+        ordersAbstractTableModel.addTableModelListener((TableModelEvent e) -> {
+            if (e instanceof OrdersButtonTableModelEvent){
+                int result = JOptionPane.showConfirmDialog(this,
+                        "Do you really want to delete this order?");
+                if (result == 0){
+                    ordersAbstractTableModel.removeOrder(((OrdersButtonTableModelEvent) e).getRow());
+                }
+            } else if (e instanceof TotalPriceChangedTableModelEvent){
+                double sum = IntStream.range(0, ordersAbstractTableModel.getRowCount())
+                        .mapToDouble(i -> (double) ordersTable.getValueAt(i, 4)).sum();
+                sum = ((double) Math.round(sum*100))/100.0d;
+                totalPriceTextField.setText(String.valueOf(sum));
+            }
+        });
+    }
+
 
     private void addActionListenerToProductsFilterTextField() {
         productsFilterTextField.addKeyListener(new KeyAdapter() {
@@ -138,6 +150,78 @@ public class OrderPanel extends JPanel {
                 productsAbstractTableModel.showAllProducts();
             productsFilterTextField.setText("");
         });
+    }
+
+    private void addActionListenerToMakeOrderButton(){
+        orderButton.addActionListener(e ->{
+            boolean accept = true;
+            if (companyNameTextField.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Customer is empty!", "Empty customer", JOptionPane.ERROR_MESSAGE);
+                accept = false;
+            }
+            if (ordersAbstractTableModel.getRowCount() == 0){
+                JOptionPane.showMessageDialog(this, "Orders are empty!", "Empty orders", JOptionPane.ERROR_MESSAGE);
+                accept = false;
+            }
+            if (accept){
+                int result = JOptionPane.showConfirmDialog(this, getOrderSummary(), "Summary", JOptionPane.INFORMATION_MESSAGE);
+                if (result == 0){
+                    System.out.println("Dodawanie zamówienia");
+                }
+            }
+
+        });
+
+    }
+
+    private JLabel getOrderSummary(){
+        JLabel label = new JLabel();
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        label.setText("<html><pre><font size = 14>Summary</font><br>  " +
+                "<br>" + fixedLengthString("Company Name:", 15) + companyNameTextField.getText() +
+                "<br>" + fixedLengthString("Address:", 15) + addressTextField.getText() +
+                "<br>" + fixedLengthString("Postal Code:", 15) + postalCodeTextField.getText() +
+                "<br>" + fixedLengthString("City:", 15) + cityTextField.getText() +
+                "<br>" + fixedLengthString("Region:", 15) + regionTextField.getText() +
+                "<br>" + fixedLengthString("Country:", 15) + countryTextField.getText() +
+                "<br>" + fixedLengthString("Contact Title:", 15) + contactTitleTextField.getText() +
+                "<br>" + fixedLengthString("Contact Name:", 15) + contactNameTextField.getText() +
+                "<br>" + fixedLengthString("Phone:" , 15) + phoneTextField.getText() +
+                "<br>" + fixedLengthString("Fax:", 15) + faxTextField.getText() +
+                "<br><br><font size = 14>Order Details </font>" +
+                "<br>" + getOrderDetailsString() +
+                "<br><br><font size = 12 color = #007F00>Total price: " + totalPriceTextField.getText() +"</font>"+
+                "<br><br><font size = 12>Do you want to make this order?</font>" +
+                "<br></pre></html>");
+        return label;
+    }
+
+    private String getOrderDetailsString(){
+        String[] headers = ordersAbstractTableModel.getHeaders();
+        String[][] rows = new String[ordersAbstractTableModel.getRowCount()][ordersAbstractTableModel.getColumnCount()-1];
+        Arrays.setAll(rows, i -> ordersAbstractTableModel.getLine(i));
+        int[] columnsWidths = new int[ordersAbstractTableModel.getColumnCount() -1];
+        Arrays.fill(columnsWidths, 0);
+        Arrays.stream(rows).forEach(row -> IntStream.range(0, row.length)
+                .filter(i -> columnsWidths[i] < row[i].length()).forEach(i -> columnsWidths[i] = row[i].length()));
+        IntStream.range(0, columnsWidths.length).filter(i -> columnsWidths[i] < 14).forEach(i -> columnsWidths[i] = 14);
+
+        String output = new String("<html><pre>");
+        for (int i = 0; i < headers.length -1; i++){
+            output += fixedLengthString(headers[i], columnsWidths[i] + 4);
+        }
+
+        for (String[] row: rows){
+            output += "<br>";
+            for (int i = 0; i < row.length; i++){
+                output += fixedLengthString(row[i], columnsWidths[i] + 4);
+            }
+        }
+        return output;
+    }
+
+    public static String fixedLengthString(String string, int length) {
+        return String.format("%-"+length + "s", string);
     }
 
     private void loadCustomersData() {
@@ -178,9 +262,18 @@ public class OrderPanel extends JPanel {
 
     private void createUIComponents() {
         productsAbstractTableModel = new ProductsAbstractTableModel();
+        ordersAbstractTableModel = new OrdersAbstractTableModel();
         productsTable = new JTable(productsAbstractTableModel);
-        TableColumn actionCol = productsTable.getColumnModel().getColumn(6);
-        actionCol.setCellRenderer(new ProductsButtonTableRenderer());
-        actionCol.setCellEditor(new ProductsButtonTableEditor());
+        ordersTable = new JTable(ordersAbstractTableModel);
+        Color green = new Color(34,139,34);
+        TableColumn actionColProducts = productsTable.getColumnModel().getColumn(6);
+        actionColProducts.setCellRenderer(new ProductsButtonTableRenderer("+", green));
+        actionColProducts.setCellEditor(new ProductsButtonTableEditor("+", green));
+        actionColProducts.setMaxWidth(60);
+        TableColumn actionColOrders = ordersTable.getColumnModel().getColumn(5);
+        actionColOrders.setCellRenderer(new ProductsButtonTableRenderer("-", Color.red));
+        actionColOrders.setCellEditor(new ProductsButtonTableEditor("-", Color.red));
+        actionColOrders.setMaxWidth(60);
+
     }
 }
