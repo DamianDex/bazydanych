@@ -107,7 +107,10 @@ public class OrderPanel extends JPanel {
     private void addActionListenerToProductsTableButton() {
         productsAbstractTableModel.addTableModelListener(e -> {
             if (e instanceof ProductsButtonTableModelEvent) {
-                ordersAbstractTableModel.addNewOrder(((ProductsButtonTableModelEvent) e).getProduct());
+                boolean hasInStock = ordersAbstractTableModel.addNewOrder(((ProductsButtonTableModelEvent) e).getProduct());
+                if (!hasInStock)
+                    JOptionPane.showMessageDialog(this, "You can't order more products",
+                            "Quantity bigger than Units In Stock", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

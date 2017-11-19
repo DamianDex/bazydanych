@@ -35,16 +35,33 @@ public class OrdersAbstractTableModel extends AbstractTableModel {
         return dataRow;
     }
 
-    public void addNewOrder(Products product){
-        productsNameList.add(product.getProductname());
-        OrderDetails orderDetails = new OrderDetails();
-        orderDetails.setProductId(product);
-        orderDetails.setUnitprice(product.getUnitprice());
-        orderDetails.setQuantity(1);
-        orderDetails.setDiscount(0);
-        orderDetailsList.add(orderDetails);
+    public boolean addNewOrder(Products product){
+        boolean productAdded = false;
+        if (!orderDetailsList.isEmpty()){
+            productAdded = orderDetailsList.stream().anyMatch(x -> x.getProductId().getProductid() == product.getProductid());
+        }
+        if (!productAdded){
+            productsNameList.add(product.getProductname());
+            OrderDetails orderDetails = new OrderDetails();
+            orderDetails.setProductId(product);
+            orderDetails.setUnitprice(product.getUnitprice());
+            orderDetails.setQuantity(1);
+            orderDetails.setDiscount(0);
+            orderDetailsList.add(orderDetails);
+        } else {
+            OrderDetails order = orderDetailsList.stream()
+                    .filter(x -> x.getProductId().getProductid() == product.getProductid()).findAny().orElse(null);
+            if (order != null) {
+                if (order.getQuantity() >= product.getUnitsinstock()) {
+                    return false;
+                }
+                order.setQuantity(order.getQuantity() + 1);
+            }
+        }
+
         fireTableDataChanged();
         fireTableChanged(new TotalPriceChangedTableModelEvent(this));
+        return true;
     }
 
     public void removeOrder(int row){
@@ -118,10 +135,22 @@ public class OrdersAbstractTableModel extends AbstractTableModel {
         OrderDetails orderDetails = orderDetailsList.get(r);
         switch (c) {
             case 2:
-                orderDetails.setDiscount((Double) value);
+                Double discount = (Double) value;
+                if (discount < 0)
+                    JOptionPane.showMessageDialog(null, "Discount can't be negative!", "Discount negative", JOptionPane.ERROR_MESSAGE);
+                else if (discount >= 1)
+                    JOptionPane.showMessageDialog(null, "Discount can't be bigger than 100%!", "Discount too big", JOptionPane.ERROR_MESSAGE);
+                else
+                    orderDetails.setDiscount(discount);
                 break;
             case 3:
-                orderDetails.setQuantity((Integer) value);
+                Integer quantity = (Integer) value;
+                if (quantity < 0)
+                    JOptionPane.showMessageDialog(null, "Quantity can't be negative!", "Quantity negative", JOptionPane.ERROR_MESSAGE);
+                else if (quantity > orderDetails.getProductId().getUnitsinstock())
+                    JOptionPane.showMessageDialog(null, "There are no such many products in stock!", "Quantity too big", JOptionPane.ERROR_MESSAGE);
+                else
+                    orderDetails.setQuantity(quantity);
                 break;
             case 5:
                 this.fireTableChanged(new OrdersButtonTableModelEvent(this, r));
