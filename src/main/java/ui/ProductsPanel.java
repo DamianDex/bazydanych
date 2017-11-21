@@ -54,7 +54,7 @@ public class ProductsPanel extends JPanel {
     private Map<String, Categories> categoriesMap;
     private Map<String, Suppliers> suppliersMap;
     private JTextField[] tableNumberTextField = {unitPriceTextField, unitsInStockTextField, unitsOnOrderTextField,
-            reorderLevelTextField, discontinuedTextField};
+            reorderLevelTextField, discontinuedTextField, minPricePlaceholderTextField, maxPricePlaceholderTextField};
 
 
     public ProductsPanel() {
@@ -70,6 +70,41 @@ public class ProductsPanel extends JPanel {
         addActionListenerToTableRowSelection();
         addActionListenerToAllTextFields();
         addMouseListenerToProductsPanel();
+        addMouseListenerToSupplierNameComboBox();
+        addMouseListenerToCategoriesNameComboBox();
+    }
+
+    private void addMouseListenerToCategoriesNameComboBox() {
+
+        categoryNameComboBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                categoriesMap = new HashMap<>();
+                categoryNameComboBox.removeAllItems();
+                DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) categoryNameComboBox.getModel();
+                comboBoxModel.addElement("");
+                for (Categories x : categoriesService.listCategories()) {
+                    categoriesMap.put(x.getCategoryName(), x);
+                    comboBoxModel.addElement(x.getCategoryName());
+                }
+            }
+        });
+    }
+
+    private void addMouseListenerToSupplierNameComboBox() {
+        supplierNameComboBox.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                suppliersMap = new HashMap<>();
+                supplierNameComboBox.removeAllItems();
+                DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) supplierNameComboBox.getModel();
+                comboBoxModel.addElement("");
+                for (Suppliers x : suppliersService.listSuppliers()) {
+                    suppliersMap.put(x.getCompanyName(), x);
+                    comboBoxModel.addElement(x.getCompanyName());
+                }
+            }
+        });
     }
 
     private void addMouseListenerToProductsPanel() {
@@ -162,8 +197,6 @@ public class ProductsPanel extends JPanel {
 
     private void initUi() {
         initEmptyProductsTable();
-        loadCategoriesData();
-        loadSuppliersData();
     }
 
     private void initEmptyProductsTable() {
@@ -172,26 +205,6 @@ public class ProductsPanel extends JPanel {
         productsTable.setModel(model);
         productsTable.setRowSelectionAllowed(true);
         productsTable.setCellSelectionEnabled(false);
-    }
-
-    private void loadCategoriesData() {
-        categoriesMap = new HashMap<>();
-        DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) categoryNameComboBox.getModel();
-        comboBoxModel.addElement("");
-        for (Categories x : categoriesService.listCategories()) {
-            categoriesMap.put(x.getCategoryName(), x);
-            comboBoxModel.addElement(x.getCategoryName());
-        }
-    }
-
-    private void loadSuppliersData() {
-        suppliersMap = new HashMap<>();
-        DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) supplierNameComboBox.getModel();
-        comboBoxModel.addElement("");
-        for (Suppliers x : suppliersService.listSuppliers()) {
-            suppliersMap.put(x.getCompanyName(), x);
-            comboBoxModel.addElement(x.getCompanyName());
-        }
     }
 
     private void setProductTextFields(Products products) {

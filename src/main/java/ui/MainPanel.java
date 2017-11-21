@@ -11,6 +11,7 @@ public class MainPanel {
     private JPanel ordersTab;
     private JPanel productsTab;
     private JPanel salesReport;
+    private SupplierPanel supplierPanel1;
 
     public MainPanel() {
 
