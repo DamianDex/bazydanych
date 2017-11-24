@@ -1,8 +1,13 @@
 package ui;
 
 import entities.Customers;
+import entities.OrderDetails;
+import entities.Orders;
 import helpers.ServiceHelper;
+import helpers.SessionHelper;
+import org.hibernate.cfg.Configuration;
 import service.CustomersServiceImpl;
+import service.OrdersServiceImpl;
 import service.ProductsServiceImpl;
 import ui.custom.*;
 
@@ -12,9 +17,8 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class OrderPanel extends JPanel {
@@ -42,8 +46,13 @@ public class OrderPanel extends JPanel {
     private JPanel CustomersDetailsPanel;
     private JButton loadProductsButton;
 
-    private CustomersServiceImpl customersService = new ServiceHelper().getCustomersServiceImpl();
-    private ProductsServiceImpl productsService = new ServiceHelper().getProductsService();
+    private ServiceHelper serviceHelper = new ServiceHelper();
+
+    private CustomersServiceImpl customersService = serviceHelper.getCustomersServiceImpl();
+    private ProductsServiceImpl productsService = serviceHelper.getProductsService();
+    private OrdersServiceImpl ordersService = serviceHelper.getOrdersServiceImpl();
+
+    SessionHelper sessionHelper = new SessionHelper(new Configuration().configure().buildSessionFactory());
 
 
     private Map<String, Customers> customersMap;
@@ -109,7 +118,7 @@ public class OrderPanel extends JPanel {
             if (e instanceof ProductsButtonTableModelEvent) {
                 boolean hasInStock = ordersAbstractTableModel.addNewOrder(((ProductsButtonTableModelEvent) e).getProduct());
                 if (!hasInStock)
-                    JOptionPane.showMessageDialog(this, "You can't order more products",
+                    JOptionPane.showMessageDialog(this, "You can't order more products on this type",
                             "Quantity bigger than Units In Stock", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -169,7 +178,14 @@ public class OrderPanel extends JPanel {
             if (accept){
                 int result = JOptionPane.showConfirmDialog(this, getOrderSummary(), "Summary", JOptionPane.INFORMATION_MESSAGE);
                 if (result == 0){
-                    System.out.println("Dodawanie zamówienia");
+                    try {
+                        saveOrder();
+                        productsAbstractTableModel.setProductsList(productsService.listProducts());
+                        ordersAbstractTableModel.clearRecords();
+                        JOptionPane.showMessageDialog(this, "Order made successfully.");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
+                    }
                 }
             }
 
@@ -264,6 +280,48 @@ public class OrderPanel extends JPanel {
         countryTextField.setText(customers.getCountry());
         phoneTextField.setText(customers.getPhone());
         faxTextField.setText(customers.getFax());
+    }
+
+    private Customers getCustomer(){
+        if (selectedCustomer != null && existingCustomerRadioButton.isEnabled())
+            return selectedCustomer;
+        else {
+            Customers customers = new Customers();
+            customers.setAddress(addressTextField.getText());
+            customers.setCity(cityTextField.getText());
+            customers.setCompanyname(companyNameTextField.getText());
+            customers.setContactname(contactNameTextField.getText());
+            customers.setContacttitle(contactTitleTextField.getText());
+            customers.setCountry(countryTextField.getText());
+            customers.setFax(faxTextField.getText());
+            customers.setPhone(phoneTextField.getText());
+            customers.setPostalcode(postalCodeTextField.getText());
+            customers.setRegion(regionTextField.getText());
+            customers.generateCustomerId();
+            return customers;
+        }
+    }
+
+    private Orders getOrder(){
+        Orders order = new Orders();
+        order.setEmployeeId(1);
+        order.setShipVia(1);
+        order.setOrderDate(new Date());
+        return order;
+    }
+
+    private void saveOrder(){
+        Orders orders = getOrder();
+        orders.setCustomers(getCustomer());
+        List<OrderDetails> orderDetailsList = ordersAbstractTableModel.getOrderDetailsList();
+
+        orderDetailsList.forEach(x -> {
+            x.getPk().setOrders(orders);
+        });
+
+        Set<OrderDetails> odSet = new HashSet<>(orderDetailsList);
+        orders.setOrderDetails(odSet);
+        ordersService.addOrder(orders);
     }
 
     private void createUIComponents() {

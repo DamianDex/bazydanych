@@ -2,11 +2,10 @@ package entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Orders implements Serializable {
@@ -14,9 +13,17 @@ public class Orders implements Serializable {
     @Id
     @GenericGenerator(name = "ordersGenerator", strategy = "increment")
     @GeneratedValue(generator = "ordersGenerator")
+    @Column(name = "orderid")
     private int orderId;
 
-    private String customerId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.orders", cascade=CascadeType.ALL)
+    private Set<OrderDetails> orderDetails;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = " customerid")
+    private Customers customers;
+
+
     private int employeeId;
     private Date orderDate;
     private Date requiredDate;
@@ -38,7 +45,6 @@ public class Orders implements Serializable {
                   String shipName, String shipAddress, String shipCity, String shipRegion,
                   String shipPostalCode, String shipCountry) {
         this.orderId = orderId;
-        this.customerId = customerId;
         this.employeeId = employeeId;
         this.orderDate = orderDate;
         this.requiredDate = requiredDate;
@@ -61,12 +67,18 @@ public class Orders implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public Customers getCustomers() {
+        return customers;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
+        this.shipName = customers.getCompanyname();
+        this.shipAddress = customers.getAddress();
+        this.shipCity = customers.getCity();
+        this.shipRegion = customers.getRegion();
+        this.shipPostalCode = customers.getPostalcode();
+        this.shipCountry = customers.getCountry();
     }
 
     public int getEmployeeId() {
@@ -165,11 +177,19 @@ public class Orders implements Serializable {
         this.shipCountry = shipCountry;
     }
 
+    public Set<OrderDetails> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+
     @Override
     public String toString() {
         return "Orders{" +
                 "orderId=" + orderId +
-                ", customerId=" + customerId +
                 ", employeeId=" + employeeId +
                 ", orderDate=" + orderDate +
                 ", requiredDate=" + requiredDate +

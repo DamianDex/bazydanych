@@ -35,22 +35,26 @@ public class OrdersAbstractTableModel extends AbstractTableModel {
         return dataRow;
     }
 
+    public List<OrderDetails> getOrderDetailsList(){
+        return orderDetailsList;
+    }
+
     public boolean addNewOrder(Products product){
         boolean productAdded = false;
         if (!orderDetailsList.isEmpty()){
-            productAdded = orderDetailsList.stream().anyMatch(x -> x.getProductId().getProductid() == product.getProductid());
+            productAdded = orderDetailsList.stream().anyMatch(x -> x.getPk().getProducts().getProductid() == product.getProductid());
         }
         if (!productAdded){
             productsNameList.add(product.getProductname());
             OrderDetails orderDetails = new OrderDetails();
-            orderDetails.setProductId(product);
+            orderDetails.getPk().setProducts(product);
             orderDetails.setUnitprice(product.getUnitprice());
             orderDetails.setQuantity(1);
             orderDetails.setDiscount(0);
             orderDetailsList.add(orderDetails);
         } else {
             OrderDetails order = orderDetailsList.stream()
-                    .filter(x -> x.getProductId().getProductid() == product.getProductid()).findAny().orElse(null);
+                    .filter(x -> x.getPk().getProducts().getProductid() == product.getProductid()).findAny().orElse(null);
             if (order != null) {
                 if (order.getQuantity() >= product.getUnitsinstock()) {
                     return false;
@@ -147,7 +151,7 @@ public class OrdersAbstractTableModel extends AbstractTableModel {
                 Integer quantity = (Integer) value;
                 if (quantity < 0)
                     JOptionPane.showMessageDialog(null, "Quantity can't be negative!", "Quantity negative", JOptionPane.ERROR_MESSAGE);
-                else if (quantity > orderDetails.getProductId().getUnitsinstock())
+                else if (quantity > orderDetails.getPk().getProducts().getUnitsinstock())
                     JOptionPane.showMessageDialog(null, "There are no such many products in stock!", "Quantity too big", JOptionPane.ERROR_MESSAGE);
                 else
                     orderDetails.setQuantity(quantity);
@@ -166,6 +170,12 @@ public class OrdersAbstractTableModel extends AbstractTableModel {
 
     private double getTotalPrice(double unitPrice, double quantity, double discount){
         return unitPrice*quantity - unitPrice*quantity*discount;
+    }
+
+    public void clearRecords(){
+        productsNameList.clear();
+        orderDetailsList.clear();
+        fireTableDataChanged();
     }
 
 }

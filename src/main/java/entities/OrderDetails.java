@@ -7,19 +7,15 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "order_details")
-@IdClass(OrderDetailsKey.class)
+@AssociationOverrides({
+        @AssociationOverride(name = "pk.orders",
+                joinColumns = @JoinColumn(name = "orderid")),
+        @AssociationOverride(name = "pk.products",
+                joinColumns = @JoinColumn(name = "productid")) })
 public class OrderDetails implements Serializable {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "orderId")
-    private Orders orderId;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "productid")
-    private Products productId;
-
+    private OrderDetailsId pk = new OrderDetailsId();
     private double unitprice;
     private int quantity;
     private double discount;
@@ -27,28 +23,38 @@ public class OrderDetails implements Serializable {
     public OrderDetails() {
     }
 
-    public OrderDetails(Orders orderId, Products productId, double unitprice, int quantity, double discount) {
-        this.orderId = orderId;
-        this.productId = productId;
+    public OrderDetails(double unitprice, int quantity, double discount) {
+
         this.unitprice = unitprice;
         this.quantity = quantity;
         this.discount = discount;
     }
 
-    public Orders getOrderId() {
-        return orderId;
+    @EmbeddedId
+    public OrderDetailsId getPk() {
+        return pk;
     }
 
-    public void setOrderId(Orders orderId) {
-        this.orderId = orderId;
+    public void setPk(OrderDetailsId pk) {
+        this.pk = pk;
     }
 
-    public Products getProductId() {
-        return productId;
+    @Transient
+    public Orders getOrders(){
+        return getPk().getOrders();
     }
 
-    public void setProductId(Products productId) {
-        this.productId = productId;
+    public void setOrders(Orders order){
+        getPk().setOrders(order);
+    }
+
+    @Transient
+    public Products getProducts(){
+        return getPk().getProducts();
+    }
+
+    public void setProducts(Products products){
+        getPk().setProducts(products);
     }
 
     public double getUnitprice() {
@@ -78,9 +84,7 @@ public class OrderDetails implements Serializable {
     @Override
     public String toString() {
         return "OrderDetails{" +
-                "orderId=" + orderId +
-                ", productId=" + productId +
-                ", unitprice=" + unitprice +
+                "unitprice=" + unitprice +
                 ", quantity=" + quantity +
                 ", discount=" + discount +
                 '}';

@@ -1,12 +1,14 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Random;
+import java.util.Set;
 
 @Entity
 public class Customers {
 
     @Id
+    @Column(name = "customerid")
     private String customerid;
 
     private String companyname;
@@ -19,6 +21,9 @@ public class Customers {
     private String country;
     private String phone;
     private String fax;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Orders> orders;
 
     public Customers() {
     }
@@ -36,6 +41,14 @@ public class Customers {
         this.country = country;
         this.phone = phone;
         this.fax = fax;
+    }
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 
     public String getCustomerid() {
@@ -124,6 +137,22 @@ public class Customers {
 
     public void setFax(String fax) {
         this.fax = fax;
+    }
+
+    public boolean generateCustomerId(){
+        if ((companyname != null) ){
+            String name = companyname.replace(" ", "");
+            customerid = name.substring(0,1).toUpperCase();
+            char[] chars = name.substring(1).toUpperCase().toCharArray();
+            Random rand = new Random();
+            int i = 1;
+            while (i < 5){
+                customerid += chars[rand.nextInt(chars.length)];
+                i++;
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

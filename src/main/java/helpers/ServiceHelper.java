@@ -1,9 +1,6 @@
 package helpers;
 
-import dao.CategoriesDAOImpl;
-import dao.CustomersDAOImpl;
-import dao.ProductsDAOImpl;
-import dao.SuppliersDAOImpl;
+import dao.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import reports.SalesReportImpl;
@@ -64,5 +61,16 @@ public class ServiceHelper {
         customersService.setCustomersDAO(customersDAO);
 
         return customersService;
+    }
+
+
+    public OrdersServiceImpl getOrdersServiceImpl(){
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        OrdersDAOImpl ordersDAO = new OrdersDAOImpl(sessionFactory);
+
+        OrdersServiceImpl ordersService = new OrdersServiceImpl();
+        ordersService.setOrdersDAO(ordersDAO);
+
+        return ordersService;
     }
 }

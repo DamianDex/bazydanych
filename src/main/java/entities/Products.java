@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 public class Products implements Serializable {
@@ -11,6 +12,7 @@ public class Products implements Serializable {
     @Id
     @GenericGenerator(name = "productsGenerator", strategy = "increment")
     @GeneratedValue(generator = "productsGenerator")
+    @Column(name = "productid")
     private int productid;
 
     @ManyToOne
@@ -20,6 +22,9 @@ public class Products implements Serializable {
     @ManyToOne
     @JoinColumn(name = " categoryId")
     private Categories categories;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.products", cascade=CascadeType.ALL)
+    private Set<OrderDetails> orderDetails;
 
     private String productname;
     private String quantityperunit;
@@ -134,6 +139,14 @@ public class Products implements Serializable {
 
     public void setDiscontinued(int discontinued) {
         this.discontinued = discontinued;
+    }
+
+    public Set<OrderDetails> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     @Override
