@@ -283,7 +283,7 @@ public class OrderPanel extends JPanel {
     }
 
     private Customers getCustomer(){
-        if (selectedCustomer != null && existingCustomerRadioButton.isEnabled())
+        if (selectedCustomer != null && existingCustomerRadioButton.isSelected())
             return selectedCustomer;
         else {
             Customers customers = new Customers();
