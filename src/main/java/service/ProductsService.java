@@ -16,6 +16,12 @@ public interface ProductsService {
 
     public List<Products> listProducts();
 
+    public List<Products> listChoiceProducts(double minPrice, double maxPrice, int categoryId, int supplierId);
+
+    public List<Products> listProductsByCategories(double minPrice, double maxPrice, int categoryId);
+
+    public List<Products> listProductsBySupplier(double minPrice, double maxPrice, int supplierId);
+
     public List<Products> listProductsByName(String nameStart);
 
     public Products getProductById(int productid);

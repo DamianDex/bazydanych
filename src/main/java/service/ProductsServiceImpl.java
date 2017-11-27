@@ -33,6 +33,18 @@ public class ProductsServiceImpl implements ProductsService {
         return productsDAO.listProducts();
     }
 
+    public List<Products> listChoiceProducts(double minPrice, double maxPrice, int categoryId, int supplierId){
+        return productsDAO.listChoiceProducts(minPrice,maxPrice,categoryId,supplierId);
+    }
+
+    public List<Products> listProductsByCategories(double minPrice, double maxPrice, int categoryId){
+     return productsDAO.listProductsByCategories(minPrice,maxPrice,categoryId);
+    }
+
+    public List<Products> listProductsBySupplier(double minPrice, double maxPrice, int supplierId){
+        return productsDAO.listProductsBySupplier(minPrice,maxPrice,supplierId);
+    }
+
     @Override
     public List<Products> listProductsByName(String nameStart) {
         return productsDAO.listProductsByName(nameStart);

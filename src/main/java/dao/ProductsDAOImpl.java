@@ -61,6 +61,51 @@ public class ProductsDAOImpl implements ProductsDAO {
         return productsList;
     }
 
+    public List<Products> listChoiceProducts(double minPrice, double maxPrice, int categoryId, int supplierId) {
+        Session session = prepareSession();
+        Query query = session.createQuery("from Products p " +
+                "where categoryId = :categoryId and supplierId = :supplierId and unitprice >= :minPrice and unitprice <= :maxPrice");
+        query.setParameter("minPrice",minPrice);
+        query.setParameter("maxPrice", maxPrice);
+        query.setParameter("categoryId",categoryId);
+        query.setParameter("supplierId",supplierId);
+        List<Products> productsList = query.list();
+        for(Products products : productsList){
+            LOGGER.info("Products List: "+ products);
+        }
+        finishSession(session);
+        return productsList;
+    }
+
+    public List<Products> listProductsByCategories(double minPrice, double maxPrice, int categoryId) {
+        Session session = prepareSession();
+        Query query = session.createQuery("from Products p " +
+                "where categoryId = :categoryId and unitprice >= :minPrice and unitprice <= :maxPrice");
+        query.setParameter("minPrice",minPrice);
+        query.setParameter("maxPrice", maxPrice);
+        query.setParameter("categoryId",categoryId);
+        List<Products> productsList = query.list();
+        for(Products products : productsList){
+            LOGGER.info("Products List: "+ products);
+        }
+        finishSession(session);
+        return productsList;
+    }
+    public List<Products> listProductsBySupplier(double minPrice, double maxPrice, int supplierId) {
+        Session session = prepareSession();
+        Query query = session.createQuery("from Products p " +
+                "where supplierId = :supplierId and unitprice >= :minPrice and unitprice <= :maxPrice");
+        query.setParameter("minPrice",minPrice);
+        query.setParameter("maxPrice", maxPrice);
+        query.setParameter("supplierId",supplierId);
+        List<Products> productsList = query.list();
+        for(Products products : productsList){
+            LOGGER.info("Products List: "+ products);
+        }
+        finishSession(session);
+        return productsList;
+    }
+
     @SuppressWarnings("unchecked")
     public List<Products> listProducts() {
         Session session = prepareSession();

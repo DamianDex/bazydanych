@@ -46,16 +46,18 @@ public class ProductsPanel extends JPanel {
     private PlaceholderTextField maxPricePlaceholderTextField;
     private JButton searchButton;
     private JPanel searchPanel;
+    private JComboBox categoryNameComboBox2;
+    private JComboBox supplierNameComboBox2;
 
     private ProductsServiceImpl productsService = new ServiceHelper().getProductsService();
     private CategoriesServiceImpl categoriesService = new ServiceHelper().getCategoriesService();
     private SuppliersServiceImpl suppliersService = new ServiceHelper().getSuppliersService();
     private Products selectedProduct;
+
     private Map<String, Categories> categoriesMap;
     private Map<String, Suppliers> suppliersMap;
     private JTextField[] tableNumberTextField = {unitPriceTextField, unitsInStockTextField, unitsOnOrderTextField,
             reorderLevelTextField, discontinuedTextField, minPricePlaceholderTextField, maxPricePlaceholderTextField};
-
 
     public ProductsPanel() {
         initUi();
@@ -70,38 +72,41 @@ public class ProductsPanel extends JPanel {
         addActionListenerToTableRowSelection();
         addActionListenerToAllTextFields();
         addMouseListenerToProductsPanel();
-        addMouseListenerToSupplierNameComboBox();
-        addMouseListenerToCategoriesNameComboBox();
+        addFocusListenerToSupplierNameComboBox(supplierNameComboBox);
+        addFocusListenerToSupplierNameComboBox(supplierNameComboBox2);
+        addFocusListenerToCategoriesNameComboBox(categoryNameComboBox);
+        addFocusListenerToCategoriesNameComboBox(categoryNameComboBox2);
     }
 
-    private void addMouseListenerToCategoriesNameComboBox() {
-
-        categoryNameComboBox.addMouseListener(new MouseAdapter() {
+    private void addFocusListenerToSupplierNameComboBox(JComboBox supplierNameComboBox) {
+        supplierNameComboBox.addFocusListener(new FocusAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                categoriesMap = new HashMap<>();
-                categoryNameComboBox.removeAllItems();
-                DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) categoryNameComboBox.getModel();
-                comboBoxModel.addElement("");
-                for (Categories x : categoriesService.listCategories()) {
-                    categoriesMap.put(x.getCategoryName(), x);
-                    comboBoxModel.addElement(x.getCategoryName());
+            public void focusGained(FocusEvent e) {
+                if (supplierNameComboBox.getItemCount() - 1 != suppliersService.listSuppliers().size()) {
+                    supplierNameComboBox.removeAllItems();
+                    DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) supplierNameComboBox.getModel();
+                    comboBoxModel.addElement("");
+                    for (Suppliers x : suppliersService.listSuppliers()) {
+                        suppliersMap.put(x.getCompanyName(), x);
+                        comboBoxModel.addElement(x.getCompanyName());
+                    }
                 }
             }
         });
     }
 
-    private void addMouseListenerToSupplierNameComboBox() {
-        supplierNameComboBox.addMouseListener(new MouseAdapter() {
+    private void addFocusListenerToCategoriesNameComboBox(JComboBox categoryNameComboBox) {
+        categoryNameComboBox.addFocusListener(new FocusAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                suppliersMap = new HashMap<>();
-                supplierNameComboBox.removeAllItems();
-                DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) supplierNameComboBox.getModel();
-                comboBoxModel.addElement("");
-                for (Suppliers x : suppliersService.listSuppliers()) {
-                    suppliersMap.put(x.getCompanyName(), x);
-                    comboBoxModel.addElement(x.getCompanyName());
+            public void focusGained(FocusEvent e) {
+                if (categoryNameComboBox.getItemCount() - 1 != categoriesService.listCategories().size()) {
+                    categoryNameComboBox.removeAllItems();
+                    DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) categoryNameComboBox.getModel();
+                    comboBoxModel.addElement("");
+                    for (Categories x : categoriesService.listCategories()) {
+                        categoriesMap.put(x.getCategoryName(), x);
+                        comboBoxModel.addElement(x.getCategoryName());
+                    }
                 }
             }
         });
@@ -151,7 +156,6 @@ public class ProductsPanel extends JPanel {
                 pushAllDataFromDbToTable();
             }
         });
-
     }
 
     private void addActionListenerToUpdateBtn() {
@@ -186,10 +190,11 @@ public class ProductsPanel extends JPanel {
     private void addActionListenerToSearchBtn() {
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (minPricePlaceholderTextField.getText().isEmpty() && maxPricePlaceholderTextField.getText().isEmpty()) {
+                if (minPricePlaceholderTextField.getText().isEmpty() && maxPricePlaceholderTextField.getText().isEmpty()
+                        && categoryNameComboBox2.getSelectedItem().equals("") && supplierNameComboBox2.getSelectedItem().equals("")) {
                     pushAllDataFromDbToTable();
                 } else {
-                    pushChoiceDataFromDbtoTable();
+                    pushChoiceDataFromDbToTable();
                 }
             }
         });
@@ -197,6 +202,34 @@ public class ProductsPanel extends JPanel {
 
     private void initUi() {
         initEmptyProductsTable();
+        loadCategoriesData();
+        loadSuppliersData();
+    }
+
+    private void loadCategoriesData() {
+        categoriesMap = new HashMap<>();
+        DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) categoryNameComboBox.getModel();
+        DefaultComboBoxModel comboBoxModel2 = (DefaultComboBoxModel) categoryNameComboBox2.getModel();
+        comboBoxModel.addElement("");
+        comboBoxModel2.addElement("");
+        for (Categories x : categoriesService.listCategories()) {
+            categoriesMap.put(x.getCategoryName(), x);
+            comboBoxModel.addElement(x.getCategoryName());
+            comboBoxModel2.addElement(x.getCategoryName());
+        }
+    }
+
+    private void loadSuppliersData() {
+        suppliersMap = new HashMap<>();
+        DefaultComboBoxModel comboBoxModel = (DefaultComboBoxModel) supplierNameComboBox.getModel();
+        DefaultComboBoxModel comboBoxModel2 = (DefaultComboBoxModel) supplierNameComboBox2.getModel();
+        comboBoxModel.addElement("");
+        comboBoxModel2.addElement("");
+        for (Suppliers suppliers : suppliersService.listSuppliers()) {
+            suppliersMap.put(suppliers.getCompanyName(), suppliers);
+            comboBoxModel.addElement(suppliers.getCompanyName());
+            comboBoxModel2.addElement(suppliers.getCompanyName());
+        }
     }
 
     private void initEmptyProductsTable() {
@@ -242,6 +275,12 @@ public class ProductsPanel extends JPanel {
         unitsOnOrderTextField.setText("");
         reorderLevelTextField.setText("");
         discontinuedTextField.setText("");
+        supplierNameComboBox2.setSelectedIndex(0);
+        supplierNameComboBox.setSelectedIndex(0);
+        categoryNameComboBox2.setSelectedIndex(0);
+        categoryNameComboBox.setSelectedIndex(0);
+        minPricePlaceholderTextField.setText("");
+        maxPricePlaceholderTextField.setText("");
     }
 
     private void showErrorDialog(String errorMsg) {
@@ -261,14 +300,48 @@ public class ProductsPanel extends JPanel {
         }
     }
 
-    private void pushChoiceDataFromDbtoTable() {
-        List<Products> productsList;
-        if (minPricePlaceholderTextField.getText().isEmpty()) {
-            productsList = productsService.listProductsByPrice(0, Double.parseDouble(maxPricePlaceholderTextField.getText()));
+    private void pushChoiceDataFromDbToTable() {
+        List<Products> productsList = null;
+
+        if (minPricePlaceholderTextField.getText().isEmpty() && maxPricePlaceholderTextField.getText().isEmpty()) {
+            if (supplierNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByCategories(0, Double.MAX_VALUE, categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId());
+            } else if (categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsBySupplier(0, Double.MAX_VALUE, suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            } else {
+                productsList = productsService.listChoiceProducts(0, Double.MAX_VALUE, categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId(), suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            }
         } else if (maxPricePlaceholderTextField.getText().isEmpty()) {
-            productsList = productsService.listProductsByPrice(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.MAX_VALUE);
-        } else
-            productsList = productsService.listProductsByPrice(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.parseDouble(maxPricePlaceholderTextField.getText()));
+            if (supplierNameComboBox2.getSelectedItem().equals("") && categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByPrice(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.MAX_VALUE);
+            } else if (supplierNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByCategories(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.MAX_VALUE, categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId());
+            } else if (categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsBySupplier(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.MAX_VALUE, suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            } else {
+                productsList = productsService.listChoiceProducts(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.MAX_VALUE, categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId(), suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            }
+        } else if (minPricePlaceholderTextField.getText().isEmpty()) {
+            if (supplierNameComboBox2.getSelectedItem().equals("") && categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByPrice(0, Double.parseDouble(maxPricePlaceholderTextField.getText()));
+            } else if (supplierNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByCategories(0, Double.parseDouble(maxPricePlaceholderTextField.getText()), categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId());
+            } else if (categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsBySupplier(0, Double.parseDouble(maxPricePlaceholderTextField.getText()), suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            } else {
+                productsList = productsService.listChoiceProducts(0, Double.parseDouble(maxPricePlaceholderTextField.getText()), categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId(), suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            }
+        } else {
+            if (supplierNameComboBox2.getSelectedItem().equals("") && categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByPrice(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.parseDouble(maxPricePlaceholderTextField.getText()));
+            } else if (supplierNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsByCategories(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.parseDouble(maxPricePlaceholderTextField.getText()), categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId());
+            } else if (categoryNameComboBox2.getSelectedItem().equals("")) {
+                productsList = productsService.listProductsBySupplier(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.parseDouble(maxPricePlaceholderTextField.getText()), suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            } else {
+                productsList = productsService.listChoiceProducts(Double.parseDouble(minPricePlaceholderTextField.getText()), Double.parseDouble(maxPricePlaceholderTextField.getText()), categoriesMap.get(categoryNameComboBox2.getSelectedItem()).getCategoryId(), suppliersMap.get(supplierNameComboBox2.getSelectedItem()).getSupplierId());
+            }
+        }
 
         DefaultTableModel tableModel = (DefaultTableModel) productsTable.getModel();
         tableModel.setRowCount(0); //clear JTable
@@ -278,7 +351,6 @@ public class ProductsPanel extends JPanel {
         for (Products product : productsList) {
             tableModel.addRow(product.toArray());
         }
-
     }
 
     private void sortProducts(List<Products> productsList) {
@@ -292,5 +364,6 @@ public class ProductsPanel extends JPanel {
             }
         });
     }
+
 
 }
