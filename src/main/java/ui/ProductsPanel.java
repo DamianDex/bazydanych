@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class ProductsPanel extends JPanel {
             "Units On Stock", "Reorder Level", "Discontinued"};
     private static final int INITIAL_ROW_NUMBER = 0;
     private static final String PRODUCT_NUMBER = "Please insert a number";
+    private static final String PRODUCT_FIELDS = "Please fill all fields in Current Selection";
     private JPanel productsPanel;
     private JPanel buttonPanel;
     private JPanel currentSelectionPanel;
@@ -126,6 +128,7 @@ public class ProductsPanel extends JPanel {
                 public void keyTyped(KeyEvent e) {
                     if (Character.isLetter(e.getKeyChar())) {
                         showErrorDialog(PRODUCT_NUMBER);
+                        e.consume();
                     }
                 }
             });
@@ -179,10 +182,14 @@ public class ProductsPanel extends JPanel {
     private void addActionListenerToAddNewBtn() {
         addNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Products productToAdd = getProductFromTextFields();
-
-                productsService.addProduct(productToAdd);
-                pushAllDataFromDbToTable();
+                try {
+                    Products productToAdd = getProductFromTextFields();
+                    productsService.addProduct(productToAdd);
+                    pushAllDataFromDbToTable();
+                    clearProductTextFields();
+                } catch (NumberFormatException | NullPointerException ex) {
+                    showErrorDialog(PRODUCT_FIELDS);
+                }
             }
         });
     }
