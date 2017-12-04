@@ -25,7 +25,7 @@ public class SalesReportImpl implements SalesReport {
         String queryString = "select year(o.orderDate), month(o.orderDate), sum(od.unitprice * od.quantity) " +
                 "from Orders o " +
                 "join OrderDetails od " +
-                "on o.orderId = od.orderId " +
+                "on o.orderId = od.pk.orders.orderId " +
                 "group by year(o.orderDate), month(o.orderDate) " +
                 "order by year(o.orderDate), month(o.orderDate)";
 
