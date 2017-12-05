@@ -3,10 +3,21 @@ package helpers;
 import dao.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import reports.CustomerReportImpl;
 import reports.SalesReportImpl;
 import service.*;
 
 public class ServiceHelper {
+
+    public CustomerReportServiceImpl getCustomerReportService() {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        CustomerReportImpl bestCustomerReport = new CustomerReportImpl(sessionFactory);
+
+        CustomerReportServiceImpl bestCustomerReportService = new CustomerReportServiceImpl();
+        bestCustomerReportService.setSalesReport(bestCustomerReport);
+
+        return bestCustomerReportService;
+    }
 
     public SalesReportServiceImpl getSalesReportService() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -64,7 +75,7 @@ public class ServiceHelper {
     }
 
 
-    public OrdersServiceImpl getOrdersServiceImpl(){
+    public OrdersServiceImpl getOrdersServiceImpl() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         OrdersDAOImpl ordersDAO = new OrdersDAOImpl(sessionFactory);
 
