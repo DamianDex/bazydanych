@@ -48,7 +48,7 @@ Hasło do pgAdmin 4:bazydanych
 
 <h1>Przebieg tworzenia projektu</h1>
 Prace nad projektem rozpoczęliśmy od utworzenia pliku konfiguracyjnego dla Hibernate'a, w którym zostały podane informacje niezbędne do połączenia z wybraną bazą danych<br/>
-<img alt="Konfiguracja Hibernate'a" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/HibernateKonfiguracja.png">
+<img alt="Konfiguracja Hibernate'a" src="https://github.com/DamianDex/bazydanych/blob/master/images/HibernateKonfiguracja.png">
 
 
 <h1>Wybrane technologie</h1>
