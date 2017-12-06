@@ -36,8 +36,20 @@ MySql
 MongoDB
 Inne do uzgodnienia
 
-<h1>Dashboard</h1>
-https://bazydanych.kanbantool.com/dashboard
+<h1>Autorzy</h1>
+Damian Fara <br/>
+Sławomir Gładyś <br/>
+Piotr Gryta <br/><br/>
+Studia inżynierskie<br/>
+Rok czwarty
+
+<h1>Hasła</h1>
+Hasło do pgAdmin 4:bazydanych
+
+<h1>Przebieg tworzenia projektu</h1>
+Prace nad projektem rozpoczęliśmy od utworzenia pliku konfiguracyjnego dla Hibernate'a, w którym zostały podane informacje niezbędne do połączenia z wybraną bazą danych<br/>
+<img alt="Konfiguracja Hibernate'a" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/HibernateKonfiguracja.png">
+
 
 <h1>Wybrane technologie</h1>
 Java <br/>
