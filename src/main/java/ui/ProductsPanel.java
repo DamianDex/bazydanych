@@ -28,7 +28,7 @@ public class ProductsPanel extends JPanel {
     private static final int INITIAL_ROW_NUMBER = 0;
     private static final String PRODUCT_NUMBER = "Please insert a number";
     private static final String PRODUCT_FIELDS = "Please fill all fields in Current Selection";
-    private static final String PRODUCT_CANT_REMOVE = "Product still used by OrderDetails";
+    private static final String PRODUCT_CANT_REMOVE = "Product can't remove. Product is still used by OrderDetails";
     private JPanel productsPanel;
     private JPanel buttonPanel;
     private JPanel currentSelectionPanel;
