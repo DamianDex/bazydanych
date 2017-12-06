@@ -44,6 +44,7 @@ Studia inżynierskie<br/>
 Rok czwarty
 
 <h1>Hasła</h1>
+Adres repozutorium:https://github.com/DamianDex/bazydanych
 Hasło do pgAdmin 4:bazydanych
 
 <h1>Wybrane technologie</h1>
@@ -86,29 +87,29 @@ Następnym krokiem jest przygotowanie klas realizujących dostęp do bazy danych
 <li>Edycja istniejących informacji w bazie.</li>
 <li>Odczytanie informacji z bazy na podstawie różnych kryteriów wyszukiwania.</li>
 </ul>
-<img alt="Interfejs kategorii" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/Interfejs.png"><br/>
+<img alt="Interfejs kategorii" src="https://github.com/DamianDex/bazydanych/blob/master/images/Interfejs.png"><br/>
 Po utworzeniu interfejsu, tworzymy klasę implementujące metody zawarte w naszym interfejsie.<br/>
 <ul>
 <li>Operacje dodawania informacji realizujemy z wykorzystaniem metody save() na otwartej sesji.
-<img alt="Dodawanie obiektu" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/OperacjaDodawania.png">
+<img alt="Dodawanie obiektu" src="https://github.com/DamianDex/bazydanych/blob/master/images/OperacjaDodawania.png">
 </li>
 <li>Operacje aktualizacji informacji wykonujemy analogicznie do operacji dodawania, z tą różnicą, że wykorzystywana jest metoda update().
-<img alt="Aktualizowanie obiektu" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/OperacjaAktualizacji.png">
+<img alt="Aktualizowanie obiektu" src="https://github.com/DamianDex/bazydanych/blob/master/images/OperacjaAktualizacji.png">
 </li>
 <li>Operacje pobierania realizujemy poprzez wczytanie do wcześniej utworzonego obiektu informacji z bazy z wykorzystaniem metody load().
-<img alt="Pobieranie danych" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/OperacjaPobieraniaDanych.png">
+<img alt="Pobieranie danych" src="https://github.com/DamianDex/bazydanych/blob/master/images/OperacjaPobieraniaDanych.png">
 </li>
 <li>Możliwe jest również pobranie wszystkich informacji z danej tabeli z wykorzystaniem metody createQuery(), gdzie jako argument podawana jest odpowiednia komenda sqlowa.
-<img alt="Listowanie danych" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/OperacjaListowania.png">
+<img alt="Listowanie danych" src="https://github.com/DamianDex/bazydanych/blob/master/images/OperacjaListowania.png">
 </li>
 <li>Operacje usuwania realizowana jest z wykorzystaniem metody delete(), gdzie jako argument podaje się wcześniej wybrany obiekt przeznaczony do usunięcia.
-<img alt="Usuwanie danych" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/OperacjaUsuwania.png">
+<img alt="Usuwanie danych" src="https://github.com/DamianDex/bazydanych/blob/master/images/OperacjaUsuwania.png">
 </li>
 </ul>
 
 Aby w ogóle możliwe było wykonywanie operacji na naszej bazie, należy wcześniej utworzyć sesję odpowiadającą za zarządzanie operacjami. W tym celu stworzyliśmy dwie klasy pomocnicze "ServiceHelper" i "SessionHelper".<br/>
-<img alt="SessionHelper" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/SessionHelper.png"><br/>
-<img alt="ServiceHelper" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/ServiceHelper.png"><br/>
+<img alt="SessionHelper" src="https://github.com/DamianDex/bazydanych/blob/master/images/SessionHelper.png"><br/>
+<img alt="ServiceHelper" src="https://github.com/DamianDex/bazydanych/blob/master/images/ServiceHelper.png"><br/>
 <h1>PostgreSQL</h1>
 
 <h1>Hibernate</h1>
