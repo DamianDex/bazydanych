@@ -23,7 +23,7 @@ public class Products implements Serializable {
     @JoinColumn(name = " categoryId")
     private Categories categories;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.products", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.products", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     private Set<OrderDetails> orderDetails;
 
     private String productname;
