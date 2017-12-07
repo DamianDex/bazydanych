@@ -85,8 +85,8 @@ Po utworzeniu encji stworzyliśmy relacje pomiędzy obiektami. Pomiędzy tabelam
 jeden do wielu. W celu utworzenia tej relacji, w klasie "Categories" tworzymy zbiór produktów przynależących do kategori. 
 Stworzone pole oznaczamy adnotacją @OneToMany.<br/>
 <img alt="Relacja OneToMany" src="https://github.com/DamianDex/bazydanych/blob/master/images/RelacjaOneToMany.png"><br/>
-W przypadku tworzenia relacji wiele do jeden pomiędzy tabelami "Products" i "Categories" należy w klasie "Products" należy
- utworzyć pole typy "Categories" i oznaczyć je adnotacją @ManyToOne. Należy również używając adnotacji @JoinColumn określić, 
+W przypadku tworzenia relacji wiele do jeden pomiędzy tabelami "Products" i "Categories" należy w klasie "Products" 
+utworzyć pole typy "Categories" i oznaczyć je adnotacją @ManyToOne. Należy również używając adnotacji @JoinColumn określić, 
  która kolumna ma stanowić klucz obcy.<br/>
 <img alt="Relacja ManyToOne" src="https://github.com/DamianDex/bazydanych/blob/master/images/RelacjaManyToOne.png"><br/>
 <b> EWENTUALNIE OPISAĆ TWORZENIE RELACJI DLA ORDER_DETAILS, PO CO FETCH CASCADE</b><br/>
@@ -151,7 +151,7 @@ Okno "Suplliers CRUD" działa w sposób analogiczny do "Categories CRUD" umożli
 <h3>Products CRUD</h3>
 <img alt="Products CRUD" src="https://github.com/DamianDex/bazydanych/blob/master/images/ProductsCRUD.png"><br/>
 W oknie "Product CRUD" operacje dodawania, usuwania i aktualizowania działają podobnie jak w oknach "Categories CRUD" i "Suppliers CRUD".
-W sekscji "Current Selection" występują dodatkowo dwa pola typu ComboBox umożliwiające przypisanie produktu do kategori 
+W sekcji "Current Selection" występują dodatkowo dwa pola typu ComboBox umożliwiające przypisanie produktu do kategori 
 i dostawcy istniejących w bazie. W oknie tym została natomiast rozbudowana opcja wyszukiwania produktów. Przycisk "Search"
 umożliwia wyszukiwanie produktów według kombinacji czterech kryteriów. Możliwe jest ustawienie jako kryterium wyszukiwania
 dostawcy produktu, kategori produktu, minimalnej i maksymalnej ceny produktu.
