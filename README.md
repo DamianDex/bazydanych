@@ -60,7 +60,7 @@ Wykonać kolejno w konsoli:<br/>
 cd /c/Users/BazyDanych/Desktop/Projekt/bazydanych <br/>
 git pull --rebase
 <br/><br/>
-<b>InteliJ Idea</b>
+<b>InteliJ Idea</b><br/>
 Uruchomić IntelliJ IDEA Community Edition 2017.3.1 - skrót na pulpicie.<br/>
 VCS -> Git -> Pull
 
