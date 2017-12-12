@@ -46,6 +46,27 @@ Piotr Gryta <br/><br/>
 Studia inżynierskie<br/>
 Rok czwarty
 
+<h1>Instrukcja uruchomienia projektu</h1>
+<h3>Uruchomienie bazy danych</h3>
+Na pulpicie dostarczonej do projektu VMki znajduje się skrót do 
+uruchomienia serwera PostgreSQL. Po uruchomieniu serwera należy zalogować się
+jako uzytkownik <b>postgres</b> używając hasła <b>bazydanych</b>.<br/>
+Baza danych Nortwhind będzie dostępna pod adresem: <b>jdbc:postgresql://localhost:5432/northwind</b>
+
+<h3>Pobranie najnowszej wersji kodu z repozytorium</h3>
+<b>Git bash</b><br/>
+Uruchomić git bash - skrót znajduję się na pulpicie.
+Wykonać kolejno w konsoli:<br/>
+cd /c/Users/BazyDanych/Desktop/Projekt/bazydanych <br/>
+git pull --rebase
+<br/><br/>
+<b>InteliJ Idea</b>
+Uruchomić IntelliJ IDEA Community Edition 2017.3.1 - skrót na pulpicie.<br/>
+VCS -> Git -> Pull
+
+<h3>Uruchomienie aplikacji</h3>
+W InteliJ Idea odnaleźć klasę MainPanel i uruchomić jej metodę main.
+
 <h1>Hasła</h1>
 Adres repozutorium:https://github.com/DamianDex/bazydanych<br/>
 Hasło do pgAdmin 4:bazydanych
