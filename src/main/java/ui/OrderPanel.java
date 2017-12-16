@@ -67,7 +67,6 @@ public class OrderPanel extends JPanel {
     private OrdersAbstractTableModel ordersAbstractTableModel;
 
     public OrderPanel() {
-        $$$setupUI$$$();
         initUI();
         addActionListeners();
     }
