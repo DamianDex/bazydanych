@@ -68,8 +68,11 @@ VCS -> Git -> Pull
 W InteliJ Idea odnaleźć klasę MainPanel i uruchomić jej metodę main.
 
 <h1>Hasła</h1>
-Adres repozutorium:https://github.com/DamianDex/bazydanych<br/>
-Hasło do pgAdmin 4:bazydanych
+Użytkownik Windows: bazy
+Hasło Windows: abc123
+Link do pobrania VMki: https://mega.nz/fm/Iix1lZxT
+Adres repozutorium: https://github.com/DamianDex/bazydanych<br/>
+Hasło do pgAdmin 4: bazydanych
 
 <h1>Wybrane technologie</h1>
 Java <br/>
