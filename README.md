@@ -71,8 +71,8 @@ W InteliJ Idea odnaleźć klasę MainPanel i uruchomić jej metodę main.
 Użytkownik Windows: bazy <br/>
 Hasło Windows: abc123 <br/>
 Link do pobrania VMki: https://mega.nz/fm/Iix1lZxT <br/>
-Adres repozutorium: https://github.com/DamianDex/bazydanych<br/> <br/>
-Hasło do pgAdmin 4: bazydanych <br/>
+Adres repozutorium: https://github.com/DamianDex/bazydanych<br/>
+Hasło do pgAdmin 4: bazy123 <br/>
 
 <h1>Wybrane technologie</h1>
 Java <br/>
