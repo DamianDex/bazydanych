@@ -1,19 +1,20 @@
 package service;
 
+import reports.CustomerReport;
 import reports.SalesReport;
 
 import java.util.List;
 
-public class CustomerReportServiceImpl implements SalesReportService {
+public class CustomerReportServiceImpl implements CustomerReportService {
 
-    SalesReport salesReport;
+    CustomerReport customerReport;
 
-    public void setSalesReport(SalesReport salesReport) {
-        this.salesReport = salesReport;
+    public void setCustomerReport(CustomerReport customerReport) {
+        this.customerReport = customerReport;
     }
 
     @Override
-    public List<Object[]> generateReport() {
-        return salesReport.generateReport();
+    public List<Object[]> generateCustomerReport(String companyName) {
+        return customerReport.generateCustomerReport(companyName);
     }
 }

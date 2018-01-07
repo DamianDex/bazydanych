@@ -2,15 +2,19 @@ package ui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import entities.Customers;
 import helpers.ServiceHelper;
 import service.CustomerReportServiceImpl;
+import service.CustomersServiceImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerReportPanel extends JPanel {
     private static final int INITIAL_ROW_NUMBER = 0;
@@ -22,7 +26,14 @@ public class CustomerReportPanel extends JPanel {
     private JButton generateReportButton;
     private JButton clearButton;
     private JTable bestCustomerReportTable;
+    private JComboBox companyNameComboBox;
+    private JTextField companyNameTextField;
+
+    private ServiceHelper serviceHelper = new ServiceHelper();
     private CustomerReportServiceImpl bestCustomerReportService = new ServiceHelper().getCustomerReportService();
+    private CustomersServiceImpl customersService = serviceHelper.getCustomersServiceImpl();
+
+    private Map<String, Customers> customersMap;
 
     public CustomerReportPanel() {
         initUI();
@@ -51,7 +62,7 @@ public class CustomerReportPanel extends JPanel {
     }
 
     private void pushDataFromDbToTable() {
-        List<Object[]> resultList = bestCustomerReportService.generateReport();
+        List<Object[]> resultList = bestCustomerReportService.generateCustomerReport(customersMap.get(companyNameComboBox.getSelectedItem()).getCompanyname());
         DefaultTableModel tableModel = (DefaultTableModel) bestCustomerReportTable.getModel();
         tableModel.setRowCount(0);
 
@@ -62,6 +73,7 @@ public class CustomerReportPanel extends JPanel {
 
     private void initUI() {
         initEmptyBestCustomerReportTable();
+        loadCustomersData();
     }
 
     private void initEmptyBestCustomerReportTable() {
@@ -71,6 +83,15 @@ public class CustomerReportPanel extends JPanel {
         bestCustomerReportTable.setRowSelectionAllowed(true);
         bestCustomerReportTable.setCellSelectionEnabled(false);
 
+    }
+    private void loadCustomersData() {
+        customersMap = new HashMap<>();
+        DefaultComboBoxModel comboModel = (DefaultComboBoxModel) companyNameComboBox.getModel();
+        comboModel.addElement("");
+        for (Customers c : customersService.listCustomers()) {
+            customersMap.put(c.getCompanyname(), c);
+            comboModel.addElement(c.getCompanyname());
+        }
     }
 
 }

@@ -14,7 +14,7 @@ public class ServiceHelper {
         CustomerReportImpl bestCustomerReport = new CustomerReportImpl(sessionFactory);
 
         CustomerReportServiceImpl bestCustomerReportService = new CustomerReportServiceImpl();
-        bestCustomerReportService.setSalesReport(bestCustomerReport);
+        bestCustomerReportService.setCustomerReport(bestCustomerReport);
 
         return bestCustomerReportService;
     }
