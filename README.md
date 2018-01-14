@@ -218,8 +218,8 @@ tworzonego zamówienia. Nastąpi również seria walidacji (nie możemy zamówi�
 <li>wprowadzana wartość rabatu jest z przedziału <0,1)</li>
 </ul>
 <br/>
-<b>Końcowy podgląd okna zamawiania produktów</b>
-<img alt="Make an Order Mock" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/MakeOrderWindow.png"><br/>
+<b>Okno zamawiania produktów</b>
+<img alt="Make an Order Window" src="https://github.com/DamianDex/bazydanych/blob/master/images/MakeOrderWindow.png"><br/>
 
 
 <h4>Order details</h4>
