@@ -212,10 +212,15 @@ tworzonego zamówienia. Nastąpi również seria walidacji (nie możemy zamówi�
 <br/>
 <b>Wymagane sprawdzenia podczas dodawania produktów do aktualnie tworzonego zamówienia:</b><br/>
 <ul>
-<li>TODO !!!</li>
-<li></li>
-<li></li>
+<li>ilość produktów w magazynie jest większa niż 0,</li>
+<li>ilość zamawianych produktów jest nie większa niż ilość dostępnych produktów,</li>
+<li>ilość zamawianych produktów musi być większa niż 0</li>
+<li>wprowadzana wartość rabatu jest z przedziału <0,1)</li>
 </ul>
+<br/>
+<b>Końcowy podgląd okna zamawiania produktów</b>
+<img alt="Make an Order Mock" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/MakeOrderWindow.png"><br/>
+
 
 <h4>Order details</h4>
 
