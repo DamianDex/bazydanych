@@ -239,3 +239,16 @@ informacje o sumie wartości wszystkich zamówień w danym miesiącu. Przycisk "
 Okno "Customer Report" działa w sposób analogiczny, z tą różnicą, że generuje raport pokazujący całkowitą wartość wszystkich
 zamówień danego klienta w danym miesiącu. Lista klientów ułożona jest w kolejności od klienta z najwyższą wartością zamówień
 w danym miesiącu.
+
+<h1>Logi z wykonywanych operacji</h1>
+<h3>Categories CRUD</h3>
+<h4>Read All</h4>
+<p> 
+Hibernate: select categories0_.categoryId as category1_0_, categories0_.categoryName as category2_0_, categories0_.description as descript3_0_ from Categories categories0_
+</p>
+
+<h4>Add New</h4>
+<p>
+Hibernate: select max(categoryId) from Categories<br/>
+Hibernate: insert into Categories (categoryName, description, categoryId) values (?, ?, ?)
+</P>
