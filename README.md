@@ -242,6 +242,12 @@ w danym miesiącu.
 
 <h1>Logi z wykonywanych operacji</h1>
 <h3>Categories CRUD</h3>
+<p>
+Operacje CRUD na tabeli Categories pokazują najprostsze operacje wykonywane przez framework Hibernate.</br>
+Zapytanie ograniczają się do najprostszych SELECT, DELETE, UPDATE i INSERT.</br>
+Brak joinów.</br>
+Tabela Categories używana jest przez tabelę Products - określa typ kategorii dla każdego z produktów.
+<p>
 <h4>Read All</h4>
 <p> 
 Hibernate: select categories0_.categoryId as category1_0_, categories0_.categoryName as category2_0_, categories0_.description as descript3_0_ from Categories categories0_
@@ -264,7 +270,7 @@ Hibernate: delete from Categories_Products where Categories_categoryId=?</br>
 Hibernate: delete from Categories where categoryId=?
 </p>
 
-<h4>delete - unsuccessful</h4>
+<h4>Delete - unsuccessful</h4>
 <p>
 Hibernate: delete from Categories_Products where Categories_categoryId=?<br/>
 Hibernate: delete from Categories where categoryId=?<br/>
@@ -275,4 +281,14 @@ WARN: SQL Error: 0, SQLState: 23503<br/>
 Jan 17, 2018 6:14:07 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions<br/>
 ERROR: ERROR: update or delete on table "categories" violates foreign key constraint "fk_products_categories" on table "products"<br/>
 Detail: Key (categoryid)=(8) is still referenced from table "products".<br/>
+</p>
+
+<h3>Suppliers CRUD</h3>
+<h4>Read All</h4>
+<p> 
+Hibernate: select suppliers0_.supplierId as supplier1_7_, suppliers0_.address as address2_7_, suppliers0_.city as city3_7_, suppliers0_.companyName as companyN4_7_, suppliers0_.contactName as contactN5_7_, suppliers0_.contactTitle as contactT6_7_, suppliers0_.country as country7_7_, suppliers0_.fax as fax8_7_, suppliers0_.homePage as homePage9_7_, suppliers0_.phone as phone10_7_, suppliers0_.postalCode as postalC11_7_, suppliers0_.region as region12_7_ from Suppliers suppliers0_ </br>
+Hibernate: select products0_.Suppliers_supplierId as Supplier1_8_0_, products0_.products_productid as products2_8_0_, products1_.productid as producti1_6_1_, products1_.categoryId as category9_6_1_, products1_.discontinued as disconti2_6_1_, products1_.productname as productn3_6_1_, products1_.quantityperunit as quantity4_6_1_, products1_.reorderlevel as reorderl5_6_1_, products1_.supplierId as supplie10_6_1_, products1_.unitprice as unitpric6_6_1_, products1_.unitsinstock as unitsins7_6_1_, products1_.unitsonorder as unitsono8_6_1_, categories2_.categoryId as category1_0_2_, categories2_.categoryName as category2_0_2_, categories2_.description as descript3_0_2_, suppliers3_.supplierId as supplier1_7_3_, suppliers3_.address as address2_7_3_, suppliers3_.city as city3_7_3_, suppliers3_.companyName as companyN4_7_3_, suppliers3_.contactName as contactN5_7_3_, suppliers3_.contactTitle as contactT6_7_3_, suppliers3_.country as country7_7_3_, suppliers3_.fax as fax8_7_3_, suppliers3_.homePage as homePage9_7_3_, suppliers3_.phone as phone10_7_3_, suppliers3_.postalCode as postalC11_7_3_, suppliers3_.region as region12_7_3_ from Suppliers_Products products0_ inner join Products products1_ on products0_.products_productid=products1_.productid left outer join Categories categories2_ on products1_.categoryId=categories2_.categoryId left outer join Suppliers suppliers3_ on products1_.supplierId=suppliers3_.supplierId where products0_.Suppliers_supplierId=? </br>
+Hibernate: select products0_.Suppliers_supplierId as Supplier1_8_0_, products0_.products_productid as products2_8_0_, products1_.productid as producti1_6_1_, products1_.categoryId as category9_6_1_, products1_.discontinued as disconti2_6_1_, products1_.productname as productn3_6_1_, products1_.quantityperunit as quantity4_6_1_, products1_.reorderlevel as reorderl5_6_1_, products1_.supplierId as supplie10_6_1_, products1_.unitprice as unitpric6_6_1_, products1_.unitsinstock as unitsins7_6_1_, products1_.unitsonorder as unitsono8_6_1_, categories2_.categoryId as category1_0_2_, categories2_.categoryName as category2_0_2_, categories2_.description as descript3_0_2_, suppliers3_.supplierId as supplier1_7_3_, suppliers3_.address as address2_7_3_, suppliers3_.city as city3_7_3_, suppliers3_.companyName as companyN4_7_3_, suppliers3_.contactName as contactN5_7_3_, suppliers3_.contactTitle as contactT6_7_3_, suppliers3_.country as country7_7_3_, suppliers3_.fax as fax8_7_3_, suppliers3_.homePage as homePage9_7_3_, suppliers3_.phone as phone10_7_3_, suppliers3_.postalCode as postalC11_7_3_, suppliers3_.region as region12_7_3_ from Suppliers_Products products0_ inner join Products products1_ on products0_.products_productid=products1_.productid left outer join Categories categories2_ on products1_.categoryId=categories2_.categoryId left outer join Suppliers suppliers3_ on products1_.supplierId=suppliers3_.supplierId where products0_.Suppliers_supplierId=? </br>
+Hibernate: select products0_.Suppliers_supplierId as Supplier1_8_0_, products0_.products_productid as products2_8_0_, products1_.productid as producti1_6_1_, products1_.categoryId as category9_6_1_, products1_.discontinued as disconti2_6_1_, products1_.productname as productn3_6_1_, products1_.quantityperunit as quantity4_6_1_, products1_.reorderlevel as reorderl5_6_1_, products1_.supplierId as supplie10_6_1_, products1_.unitprice as unitpric6_6_1_, products1_.unitsinstock as unitsins7_6_1_, products1_.unitsonorder as unitsono8_6_1_, categories2_.categoryId as category1_0_2_, categories2_.categoryName as category2_0_2_, categories2_.description as descript3_0_2_, suppliers3_.supplierId as supplier1_7_3_, suppliers3_.address as address2_7_3_, suppliers3_.city as city3_7_3_, suppliers3_.companyName as companyN4_7_3_, suppliers3_.contactName as contactN5_7_3_, suppliers3_.contactTitle as contactT6_7_3_, suppliers3_.country as country7_7_3_, suppliers3_.fax as fax8_7_3_, suppliers3_.homePage as homePage9_7_3_, suppliers3_.phone as phone10_7_3_, suppliers3_.postalCode as postalC11_7_3_, suppliers3_.region as region12_7_3_ from Suppliers_Products products0_ inner join Products products1_ on products0_.products_productid=products1_.productid left outer join Categories categories2_ on products1_.categoryId=categories2_.categoryId left outer join Suppliers suppliers3_ on products1_.supplierId=suppliers3_.supplierId where products0_.Suppliers_supplierId=? </br>
+... dalej podobne logi w ilości odpowiadającej liczbie dostawców.
 </p>
