@@ -303,3 +303,26 @@ Hibernate: update Suppliers set address=?, city=?, companyName=?, contactName=?,
 <p>
 Hibernate: delete from Suppliers where supplierId=?
 </p>
+
+<h3>Products CRUD</h3>
+<h4>Search</h4>
+<p>
+<b>Hibernate:</b> select products0_.productid as producti1_6_, products0_.categoryId as category9_6_, products0_.discontinued as disconti2_6_, products0_.productname as productn3_6_, products0_.quantityperunit as quantity4_6_, products0_.reorderlevel as reorderl5_6_, products0_.supplierId as supplie10_6_, products0_.unitprice as unitpric6_6_, products0_.unitsinstock as unitsins7_6_, products0_.unitsonorder as unitsono8_6_ from Products products0_ where categoryId=? and products0_.unitprice>=? and products0_.unitprice<=?</br>
+<b>Hibernate:</b> select categories0_.categoryId as category1_0_0_, categories0_.categoryName as category2_0_0_, categories0_.description as descript3_0_0_ from Categories categories0_ where categories0_.categoryId=?
+</p>
+
+<h4>Add New</h4>
+<p>
+<b>Hibernate:</b> select max(productid) from Products</br>
+<b>Hibernate:</b> insert into Products (categoryId, discontinued, productname, quantityperunit, reorderlevel, supplierId, unitprice, unitsinstock, unitsonorder, productid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+</p>
+
+<h4>Update</h4>
+<p>
+Hibernate: update Products set categoryId=?, discontinued=?, productname=?, quantityperunit=?, reorderlevel=?, supplierId=?, unitprice=?, unitsinstock=?, unitsonorder=? where productid=?
+</p>
+
+<h4>Delete</h4>
+<p>
+Hibernate: delete from Products where productid=?
+</p>
