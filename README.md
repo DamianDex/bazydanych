@@ -327,7 +327,7 @@ Detail: Key (categoryid)=(8) is still referenced from table "products".<br/>
 <b>Hibernate:</b> delete from Products where productid=?
 </p>
 
-<h4>Make an order</h4>
+<h3>Make an order</h3>
 <p>
 <b>Hibernate:</b> select max(orderid) from Orders
 <b>Hibernate:</b> select customers_.customerid, customers_.address as address2_2_, customers_.city as city3_2_, customers_.companyname as companyn4_2_, customers_.contactname as contactn5_2_, customers_.contacttitle as contactt6_2_, customers_.country as country7_2_, customers_.fax as fax8_2_, customers_.phone as phone9_2_, customers_.postalcode as postalc10_2_, customers_.region as region11_2_ from Customers customers_ where customers_.customerid=?</br>
@@ -337,12 +337,12 @@ Detail: Key (categoryid)=(8) is still referenced from table "products".<br/>
 <b>Hibernate:</b> insert into order_details (discount, quantity, unitprice, orderid, productid) values (?, ?, ?, ?, ?)</br>
 </P>
 
-<h4>Sales report generation</h4>
+<h3>Sales report generation</h3>
 <p>
 <b>Hibernate:</b> select extract(year from orders0_.orderDate) as col_0_0_, extract(month from orders0_.orderDate) as col_1_0_, sum(orderdetai1_.unitprice*orderdetai1_.quantity) as col_2_0_ from Orders orders0_ inner join order_details orderdetai1_ on (orders0_.orderid=orderdetai1_.orderid) group by extract(year from orders0_.orderDate) , extract(month from orders0_.orderDate) order by extract(year from orders0_.orderDate), extract(month from orders0_.orderDate) 
 </p>
 
-<h4>Customer report generation</h4>
+<h3>Customer report generation</h3>
 <p>
 <b>Hibernate:</b> select extract(year from orders0_.orderDate) as col_0_0_, extract(month from orders0_.orderDate) as col_1_0_, customers2_.companyname as col_2_0_, sum(orderdetai1_.unitprice*orderdetai1_.quantity) as col_3_0_ from Orders orders0_ inner join order_details orderdetai1_ on (orders0_.orderid=orderdetai1_.orderid) inner join Customers customers2_ on (orders0_.customerid=customers2_.customerid) where customers2_.companyname=? group by extract(year from orders0_.orderDate) , extract(month from orders0_.orderDate) , customers2_.companyname order by extract(year from orders0_.orderDate), extract(month from orders0_.orderDate), sum(orderdetai1_.unitprice*orderdetai1_.quantity) desc
 </p>
