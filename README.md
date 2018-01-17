@@ -1,3 +1,7 @@
+<h1>Spis treści</h1>
+[Temat projektu](#temat)
+
+<a name="temat" />
 <h1>Temat projektu</h1>
 Celem projektu jest zaimplementowanie systemu realizującego wybrane podstawowe operacje w przykładowej bazie Northwind
 w wybranej technologii.
