@@ -180,6 +180,7 @@ i dostawcy istniejących w bazie. W oknie tym została natomiast rozbudowana opc
 umożliwia wyszukiwanie produktów według kombinacji czterech kryteriów. Możliwe jest ustawienie jako kryterium wyszukiwania
 dostawcy produktu, kategori produktu, minimalnej i maksymalnej ceny produktu.
 
+<h3>Składanie zamówień</h3>
 <h4>Customer details</h4>
 Istnieją dwie możliwości dla wyboru klienta podczas składania nowego zamówienia: <br/>
 <ol>
