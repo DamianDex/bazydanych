@@ -84,9 +84,9 @@ AutoIT <br/>
 
 <h1>Przebieg tworzenia projektu</h1>
 Prace nad projektem rozpoczęliśmy od wygenerowania pliku konfiguracyjnego dla Mavena pom.xml oraz pliku konfiguracyjnego hibernate.cfg.xml dla Hibernate'a, w którym zostały podane informacje niezbędne do połączenia z wybraną bazą danych.
-</br>
-<img alt="Konfiguracja Mavena" src="https://github.com/DamianDex/bazydanych/blob/master/images/MavenKonfiguracja.png">
 <br/><br/>
+<img alt="Konfiguracja Mavena" src="https://github.com/DamianDex/bazydanych/blob/master/images/MavenKonfiguracja.png">
+<br/>
 <img alt="Konfiguracja Hibernate'a" src="https://github.com/DamianDex/bazydanych/blob/master/images/HibernateKonfiguracja.png">
 <br/>
 
@@ -101,12 +101,13 @@ Kolejnym krokiem było mapowanie wybranych tabel z bazy danych. W tym celu dla k
  możemy generować jego wartość zgodnie z przyjęta strategią.</li>
  <li>Do pliku konfiguracyjnego hibernate.cfg.xml dodajemy wszystkie mapowane klasy.</li>
 </ol>
+<br/>
 <img alt="Tworzenie encji" src="https://github.com/DamianDex/bazydanych/blob/master/images/CategoriesEntity.png">
 <img alt="Mapowanie klas" src="https://github.com/DamianDex/bazydanych/blob/master/images/HibernateMapping.png"><br/>
 
 Po utworzeniu encji stworzyliśmy relacje pomiędzy obiektami. Pomiędzy tabelami "Categories" i "Products" istnieje relacja
 jeden do wielu. W celu utworzenia tej relacji, w klasie "Categories" tworzymy zbiór produktów przynależących do kategori.
-Stworzone pole oznaczamy adnotacją @OneToMany.<br/>
+Stworzone pole oznaczamy adnotacją @OneToMany.<br/><br/>
 <img alt="Relacja OneToMany" src="https://github.com/DamianDex/bazydanych/blob/master/images/RelacjaOneToMany.png"><br/>
 W przypadku tworzenia relacji wiele do jeden pomiędzy tabelami "Products" i "Categories" należy w klasie "Products"
 utworzyć pole typy "Categories" i oznaczyć je adnotacją @ManyToOne. Należy również używając adnotacji @JoinColumn określić,
