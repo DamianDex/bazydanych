@@ -252,3 +252,27 @@ Hibernate: select categories0_.categoryId as category1_0_, categories0_.category
 Hibernate: select max(categoryId) from Categories<br/>
 Hibernate: insert into Categories (categoryName, description, categoryId) values (?, ?, ?)
 </P>
+
+<h4>Update</h4>
+<p>
+Hibernate: update Categories set categoryName=?, description=? where categoryId=?
+</p>
+
+<h4>Delete - successful</h4>
+<p>
+Hibernate: delete from Categories_Products where Categories_categoryId=?</br>
+Hibernate: delete from Categories where categoryId=?
+</p>
+
+<h4>delete - unsuccessful</h4>
+<p>
+Hibernate: delete from Categories_Products where Categories_categoryId=?<br/>
+Hibernate: delete from Categories where categoryId=?<br/>
+Jan 17, 2018 6:14:07 PM dao.CategoriesDAOImpl removeCategoryById<br/>
+INFO: Category deleted successfully, Category details = Categories{categoryId=8, categoryName='Seafood', description='Seaweed and fish'}<br/>
+Jan 17, 2018 6:14:07 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions<br/>
+WARN: SQL Error: 0, SQLState: 23503<br/>
+Jan 17, 2018 6:14:07 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions<br/>
+ERROR: ERROR: update or delete on table "categories" violates foreign key constraint "fk_products_categories" on table "products"<br/>
+Detail: Key (categoryid)=(8) is still referenced from table "products".<br/>
+</p>
