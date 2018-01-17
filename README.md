@@ -1,7 +1,3 @@
-<h1>Spis treści</h1>
-[Temat projektu](#temat)
-
-<a name="temat" />
 <h1>Temat projektu</h1>
 Celem projektu jest zaimplementowanie systemu realizującego wybrane podstawowe operacje w przykładowej bazie Northwind
 w wybranej technologii.
@@ -183,9 +179,6 @@ W sekcji "Current Selection" występują dodatkowo dwa pola typu ComboBox umożl
 i dostawcy istniejących w bazie. W oknie tym została natomiast rozbudowana opcja wyszukiwania produktów. Przycisk "Search"
 umożliwia wyszukiwanie produktów według kombinacji czterech kryteriów. Możliwe jest ustawienie jako kryterium wyszukiwania
 dostawcy produktu, kategori produktu, minimalnej i maksymalnej ceny produktu.
-
-<h3>Składanie zamówień</h3>
-<img alt="Make an Order Mock" src="https://github.com/DamianDex/bazydanych/blob/master/mocks/MakeAnOrderMock.png"><br/>
 
 <h4>Customer details</h4>
 Istnieją dwie możliwości dla wyboru klienta podczas składania nowego zamówienia: <br/>
