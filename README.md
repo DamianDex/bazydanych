@@ -250,30 +250,30 @@ Tabela Categories używana jest przez tabelę Products - określa typ kategorii 
 <p>
 <h4>Read All</h4>
 <p> 
-Hibernate: select categories0_.categoryId as category1_0_, categories0_.categoryName as category2_0_, categories0_.description as descript3_0_ from Categories categories0_
+<b>Hibernate:</b> select categories0_.categoryId as category1_0_, categories0_.categoryName as category2_0_, categories0_.description as descript3_0_ from Categories categories0_
 </p>
 
 <h4>Add New</h4>
 <p>
-Hibernate: select max(categoryId) from Categories<br/>
-Hibernate: insert into Categories (categoryName, description, categoryId) values (?, ?, ?)
+<b>Hibernate:</b> select max(categoryId) from Categories<br/>
+<b>Hibernate:</b> insert into Categories (categoryName, description, categoryId) values (?, ?, ?)
 </P>
 
 <h4>Update</h4>
 <p>
-Hibernate: update Categories set categoryName=?, description=? where categoryId=?
+<b>Hibernate:</b> update Categories set categoryName=?, description=? where categoryId=?
 </p>
 
 <h4>Delete - successful</h4>
 <p>
-Hibernate: delete from Categories_Products where Categories_categoryId=?</br>
-Hibernate: delete from Categories where categoryId=?
+<b>Hibernate:</b> delete from Categories_Products where Categories_categoryId=?</br>
+<b>Hibernate:</b> delete from Categories where categoryId=?
 </p>
 
 <h4>Delete - unsuccessful</h4>
 <p>
-Hibernate: delete from Categories_Products where Categories_categoryId=?<br/>
-Hibernate: delete from Categories where categoryId=?<br/>
+<b>Hibernate:</b> delete from Categories_Products where Categories_categoryId=?<br/>
+<b>Hibernate:</b> delete from Categories where categoryId=?<br/>
 Jan 17, 2018 6:14:07 PM dao.CategoriesDAOImpl removeCategoryById<br/>
 INFO: Category deleted successfully, Category details = Categories{categoryId=8, categoryName='Seafood', description='Seaweed and fish'}<br/>
 Jan 17, 2018 6:14:07 PM org.hibernate.engine.jdbc.spi.SqlExceptionHelper logExceptions<br/>
@@ -291,17 +291,17 @@ Detail: Key (categoryid)=(8) is still referenced from table "products".<br/>
 
 <h4>Add New</h4>
 <p>
-Hibernate: insert into Suppliers (address, city, companyName, contactName, contactTitle, country, fax, homePage, phone, postalCode, region, supplierId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+<b>Hibernate:</b> insert into Suppliers (address, city, companyName, contactName, contactTitle, country, fax, homePage, phone, postalCode, region, supplierId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 </p>
 
 <h4>Update</h4>
 <p>
-Hibernate: update Suppliers set address=?, city=?, companyName=?, contactName=?, contactTitle=?, country=?, fax=?, homePage=?, phone=?, postalCode=?, region=? where supplierId=?
+<b>Hibernate:</b> update Suppliers set address=?, city=?, companyName=?, contactName=?, contactTitle=?, country=?, fax=?, homePage=?, phone=?, postalCode=?, region=? where supplierId=?
 </p>
 
 <h4>Delete</h4>
 <p>
-Hibernate: delete from Suppliers where supplierId=?
+<b>Hibernate:</b> delete from Suppliers where supplierId=?
 </p>
 
 <h3>Products CRUD</h3>
@@ -319,10 +319,30 @@ Hibernate: delete from Suppliers where supplierId=?
 
 <h4>Update</h4>
 <p>
-Hibernate: update Products set categoryId=?, discontinued=?, productname=?, quantityperunit=?, reorderlevel=?, supplierId=?, unitprice=?, unitsinstock=?, unitsonorder=? where productid=?
+<b>Hibernate:</b> update Products set categoryId=?, discontinued=?, productname=?, quantityperunit=?, reorderlevel=?, supplierId=?, unitprice=?, unitsinstock=?, unitsonorder=? where productid=?
 </p>
 
 <h4>Delete</h4>
 <p>
-Hibernate: delete from Products where productid=?
+<b>Hibernate:</b> delete from Products where productid=?
+</p>
+
+<h4>Make an order</h4>
+<p>
+<b>Hibernate:</b> select max(orderid) from Orders
+<b>Hibernate:</b> select customers_.customerid, customers_.address as address2_2_, customers_.city as city3_2_, customers_.companyname as companyn4_2_, customers_.contactname as contactn5_2_, customers_.contacttitle as contactt6_2_, customers_.country as country7_2_, customers_.fax as fax8_2_, customers_.phone as phone9_2_, customers_.postalcode as postalc10_2_, customers_.region as region11_2_ from Customers customers_ where customers_.customerid=?</br>
+<b>Hibernate:</b> insert into Orders (customerid, employeeId, freight, orderDate, requiredDate, shipAddress, shipCity, shipCountry, shipName, shipPostalCode, shipRegion, shipVia, shippedDate, orderid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)</br>
+<b>Hibernate:</b> insert into order_details (discount, quantity, unitprice, orderid, productid) values (?, ?, ?, ?, ?)</br>
+<b>Hibernate:</b> insert into order_details (discount, quantity, unitprice, orderid, productid) values (?, ?, ?, ?, ?)</br>
+<b>Hibernate:</b> insert into order_details (discount, quantity, unitprice, orderid, productid) values (?, ?, ?, ?, ?)</br>
+</P>
+
+<h4>Sales report generation</h4>
+<p>
+<b>Hibernate:</b> select extract(year from orders0_.orderDate) as col_0_0_, extract(month from orders0_.orderDate) as col_1_0_, sum(orderdetai1_.unitprice*orderdetai1_.quantity) as col_2_0_ from Orders orders0_ inner join order_details orderdetai1_ on (orders0_.orderid=orderdetai1_.orderid) group by extract(year from orders0_.orderDate) , extract(month from orders0_.orderDate) order by extract(year from orders0_.orderDate), extract(month from orders0_.orderDate) 
+</p>
+
+<h4>Customer report generation</h4>
+<p>
+<b>Hibernate:</b> select extract(year from orders0_.orderDate) as col_0_0_, extract(month from orders0_.orderDate) as col_1_0_, customers2_.companyname as col_2_0_, sum(orderdetai1_.unitprice*orderdetai1_.quantity) as col_3_0_ from Orders orders0_ inner join order_details orderdetai1_ on (orders0_.orderid=orderdetai1_.orderid) inner join Customers customers2_ on (orders0_.customerid=customers2_.customerid) where customers2_.companyname=? group by extract(year from orders0_.orderDate) , extract(month from orders0_.orderDate) , customers2_.companyname order by extract(year from orders0_.orderDate), extract(month from orders0_.orderDate), sum(orderdetai1_.unitprice*orderdetai1_.quantity) desc
 </p>
