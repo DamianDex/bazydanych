@@ -113,7 +113,6 @@ W przypadku tworzenia relacji wiele do jeden pomiędzy tabelami "Products" i "Ca
 utworzyć pole typy "Categories" i oznaczyć je adnotacją @ManyToOne. Należy również używając adnotacji @JoinColumn określić,
  która kolumna ma stanowić klucz obcy.<br/>
 <img alt="Relacja ManyToOne" src="https://github.com/DamianDex/bazydanych/blob/master/images/RelacjaManyToOne.png"><br/>
-<b> EWENTUALNIE OPISAĆ TWORZENIE RELACJI DLA ORDER_DETAILS, PO CO FETCH CASCADE</b><br/>
 Następnym krokiem jest przygotowanie klas realizujących dostęp do bazy danych (klasy DAO) w celu odwzorowania zmian w klasach
 Java na operacje bazodanowe. Etap ten rozpoczynamy od utworzenia interfejsu, gdzie znajdą się metody realizujące operacje
  bazodanowe. Będą to przedewszystkim operacje:
